@@ -44,12 +44,34 @@ model Project {
 }
 
 model Folder {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
   name       String
-  slug       String    @unique
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  project    Project[] @relation(fields: [projectIds], references: [id])
-  projectIds String[]  @db.ObjectId
-  userId     String?   @db.ObjectId
+  slug       String      @unique
+  created_at DateTime    @default(now())
+  updated_at DateTime    @updatedAt
+  project    Project[]   @relation(fields: [projectIds], references: [id])
+  projectIds String[]    @db.ObjectId
+  subFolder  SubFolder[]
+  userId     String?     @db.ObjectId
+}
+
+model SubFolder {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  slug       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  folder     Folder?  @relation(fields: [folderId], references: [id])
+  folderId   String?  @db.ObjectId
+  Files      Files[]
+}
+
+model Files {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  slug        String
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  subFolder   SubFolder? @relation(fields: [subFolderId], references: [id])
+  subFolderId String?    @db.ObjectId
 }

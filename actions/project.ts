@@ -29,7 +29,6 @@ export const addProject=async(values:z.infer<typeof projectSchema>)=>{
         if(!folder){
             return {error:"Something went wrong creating folder"}
         }
-        const folderSLug=generateSlug(folder)   
 
       if(!folder){
         return {error:"Something went wrong"}
@@ -40,8 +39,8 @@ export const addProject=async(values:z.infer<typeof projectSchema>)=>{
                 slug,
                 folders:{
                     create:{
-                        name:folder,
-                        slug:folderSLug,
+                        name:name,
+                        slug:slug,
 
                     }
                 }
