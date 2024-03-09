@@ -17,13 +17,15 @@ import { getProject } from "@/actions/project";
 import { Project } from "@prisma/client";
 
 import _ from "lodash";
+import { useGetCurrentUser } from "@/hooks/get-auth-user";
 
 export const ProjectSwitcher = ({ data }: { data: Project[] }) => {
+  const user = useGetCurrentUser();
+  console.log(user);
   const params = useParams();
   const id: string | undefined = Array.isArray(params.id)
     ? params.id[0]
     : params.id;
-  console.log(id);
   const filteredProject = data.find((project) => project.id === id);
 
   return (
@@ -37,7 +39,9 @@ export const ProjectSwitcher = ({ data }: { data: Project[] }) => {
             {id ? (
               <>
                 {filteredProject?.name}
-                <ChevronsUpDown className="w-4 h-4 ml-3" />
+                {user?.role == "SUPERADMIN" && (
+                  <ChevronsUpDown className="w-4 h-4 ml-3" />
+                )}
               </>
             ) : (
               <>
@@ -61,11 +65,13 @@ export const ProjectSwitcher = ({ data }: { data: Project[] }) => {
                       </Link>
                     </DropdownMenuItem>
                   ))}
-                <DropdownMenuItem asChild>
-                  <Link href={"/dashboard"} className="cursor-pointer">
-                    Dashboard
-                  </Link>
-                </DropdownMenuItem>
+                {user?.role == "SUPERADMIN" && (
+                  <DropdownMenuItem asChild>
+                    <Link href={"/dashboard"} className="cursor-pointer">
+                      Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                )}
               </>
             ) : (
               data.map((item) => (

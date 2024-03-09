@@ -1,11 +1,14 @@
 "use server"
 
 import { getAdminByEmail } from "@/lib/admin";
-import { userSchema } from "@/schemas";
+import { loginSchema, userSchema } from "@/schemas";
 import * as z from "zod"
 import db from "@/lib/db";
 
 import bcrypt from "bcryptjs"
+import { signIn } from "@/auth";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { AuthError } from "next-auth";
 
 export const addAdmin=async(values: z.infer<typeof userSchema>,id:any)=>{
     try {
@@ -104,3 +107,46 @@ export const addAdmin=async(values: z.infer<typeof userSchema>,id:any)=>{
     }
 
 }
+
+export const login=async(values: z.infer<typeof loginSchema>,callbackUrl?:string|null)=>{
+    const validateFeilds=loginSchema.safeParse(values);
+    
+    if(!validateFeilds.success) return {error:"Invalid feilds"}
+    
+    const {email,password}=validateFeilds.data;
+    const user=await getAdminByEmail(email);
+    if(!user){
+        return {error:"Invalid credentials"}
+    }
+    console.log(user)
+    
+    const comparePassword=await bcrypt.compare(password,user.password);
+    console.log(comparePassword)
+    
+    if(!comparePassword){
+        return {error:"Invalid credentials"}
+    
+    }
+    
+    try {
+        await signIn("credentials",{email,password,
+        redirectTo: callbackUrl||DEFAULT_LOGIN_REDIRECT
+        })
+        
+       } catch (error) {
+        if(error instanceof AuthError){
+            switch(error.type){
+                case "CredentialsSignin":
+                    return {
+                        error:"Invalid credentials!"
+                    }
+                    default:
+                        return {
+                            error:"Invalid credentials!"
+                        }
+                }
+            }
+            throw error
+        }
+       }
+    
