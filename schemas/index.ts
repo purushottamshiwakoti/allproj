@@ -35,3 +35,33 @@ export const userSchema = z.object({
     role:z.string().min(1,{message:"Please select role"}),
    
 });
+
+
+export const questionSchema = z.object({
+    question: z.optional(z.string()),
+    questionImage: z.optional(z.any()),
+    questionAudio: z.optional(z.any()),
+    questionVideo: z.optional(z.any()),
+    option: z.optional(z.string()),
+    optionCorrect: z.boolean(),
+    optionImage: z.optional(z.any()),
+    optionAudio: z.optional(z.any()),
+    optionVideo: z.optional(z.any()),
+    option1: z.optional(z.string()),
+    option1Correct: z.boolean(),
+    option1Image: z.optional(z.any()),
+    option1Audio: z.optional(z.any()),
+    option1Video: z.optional(z.any()),
+    option2: z.optional(z.string()),
+    option2Correct: z.boolean(),
+    option2Image: z.optional(z.any()),
+    option2Audio: z.optional(z.any()),
+    option2Video: z.optional(z.any()),
+    option3: z.optional(z.string()),
+    option3Correct: z.boolean(),
+    option3Image: z.optional(z.any()),
+    option3Audio: z.optional(z.any()),
+    option3Video: z.optional(z.any()),
+   
+  
+  });

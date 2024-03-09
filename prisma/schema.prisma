@@ -32,15 +32,16 @@ model User {
 }
 
 model Project {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
   name       String
-  slug       String   @unique
-  folderIds  String[] @db.ObjectId
-  folders    Folder[] @relation(fields: [folderIds], references: [id])
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  users      User[]   @relation(fields: [userIds], references: [id])
-  userIds    String[] @db.ObjectId
+  slug       String     @unique
+  folderIds  String[]   @db.ObjectId
+  folders    Folder[]   @relation(fields: [folderIds], references: [id])
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  users      User[]     @relation(fields: [userIds], references: [id])
+  questions  Question[]
+  userIds    String[]   @db.ObjectId
 }
 
 model Folder {
@@ -74,4 +75,37 @@ model Files {
   updated_at  DateTime   @updatedAt
   subFolder   SubFolder? @relation(fields: [subFolderId], references: [id])
   subFolderId String?    @db.ObjectId
+}
+
+model Question {
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  question       String?
+  questionImage  String?
+  questionAudio  String?
+  questionVideo  String?
+  option         String?
+  optionCorrect  Boolean @default(false)
+  optionImage    String?
+  optionAudio    String?
+  optionVideo    String?
+  option1        String?
+  option1Correct Boolean @default(false)
+  option1Image   String?
+  option1Audio   String?
+  option1Video   String?
+  option2        String?
+  option2Correct Boolean @default(false)
+  option2Image   String?
+  option2Audio   String?
+  option2Video   String?
+  option3        String?
+  option3Correct Boolean @default(false)
+  option3Image   String?
+  option3Audio   String?
+  option3Video   String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  Project    Project? @relation(fields: [projectId], references: [id])
+  projectId  String?  @db.ObjectId
 }
