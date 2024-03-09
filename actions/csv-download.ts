@@ -9,7 +9,11 @@ export const downloadFiles=async(id:any)=>{
 subFolderId:id
         }
     })
-    console.log(data);
+
+        if (data.length === 0) {
+            throw new Error("No files found");
+        }
+
     // const data = [
     //     { id: 1, name: "John Doe", email: "john@example.com" },
     //     { id: 2, name: "Jane Smith", email: "jane@example.com" },

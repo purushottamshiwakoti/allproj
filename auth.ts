@@ -3,6 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import authConfig from "@/auth-config";
 import db from "./lib/db";
 import { getAdminById } from "./lib/admin";
+import { redirect } from "next/navigation";
 
 export const {
   handlers: { GET, POST },
@@ -14,8 +15,12 @@ export const {
     async signIn({ user }) {
       if (!user) return false;
       const existingUser = await getAdminById(user.id as string);
+
+      
+      
       if (!existingUser) return false;
       // if(existingUser.twoFactorEnabled) return false;
+    
 
       return true;
     },

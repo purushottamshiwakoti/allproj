@@ -51,41 +51,43 @@ export const ProjectSwitcher = ({ data }: { data: Project[] }) => {
             )}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-[14rem]">
-          <DropdownMenuSeparator />
-          {data.length > 0 ? (
-            filteredProject ? (
-              <>
-                {data
-                  .filter((item) => item.id !== filteredProject.id)
-                  .map((item) => (
-                    <DropdownMenuItem key={item.id} asChild>
-                      <Link href={`/${item.id}`} className="cursor-pointer">
-                        {item.name}
+        {user?.role == "SUPERADMIN" && (
+          <DropdownMenuContent className="w-[14rem]">
+            <DropdownMenuSeparator />
+            {data.length > 0 ? (
+              filteredProject ? (
+                <>
+                  {data
+                    .filter((item) => item.id !== filteredProject.id)
+                    .map((item) => (
+                      <DropdownMenuItem key={item.id} asChild>
+                        <Link href={`/${item.id}`} className="cursor-pointer">
+                          {item.name}
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  {user?.role == "SUPERADMIN" && (
+                    <DropdownMenuItem asChild>
+                      <Link href={"/dashboard"} className="cursor-pointer">
+                        Dashboard
                       </Link>
                     </DropdownMenuItem>
-                  ))}
-                {user?.role == "SUPERADMIN" && (
-                  <DropdownMenuItem asChild>
-                    <Link href={"/dashboard"} className="cursor-pointer">
-                      Dashboard
+                  )}
+                </>
+              ) : (
+                data.map((item) => (
+                  <DropdownMenuItem key={item.id} asChild>
+                    <Link href={item.id} className="cursor-pointer">
+                      {item.name}
                     </Link>
                   </DropdownMenuItem>
-                )}
-              </>
+                ))
+              )
             ) : (
-              data.map((item) => (
-                <DropdownMenuItem key={item.id} asChild>
-                  <Link href={item.id} className="cursor-pointer">
-                    {item.name}
-                  </Link>
-                </DropdownMenuItem>
-              ))
-            )
-          ) : (
-            <div>No projects added yet!</div>
-          )}
-        </DropdownMenuContent>
+              <div>No projects added yet!</div>
+            )}
+          </DropdownMenuContent>
+        )}
       </DropdownMenu>
     </>
   );

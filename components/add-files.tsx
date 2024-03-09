@@ -146,6 +146,7 @@ export const AddFiles = ({
   function exportToCSV() {
     startTransistion(async () => {
       const files = await downloadFiles(folderId);
+
       const blob = new Blob([files], { type: "text/csv" });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -173,7 +174,7 @@ export const AddFiles = ({
             className=""
             variant={"outline"}
             onClick={exportToCSV}
-            disabled={isPending || loading}
+            disabled={isPending || loading || totalCount == 0}
           >
             <FileDownIcon className="w-5 h-5 mr-1" />
             Export Files

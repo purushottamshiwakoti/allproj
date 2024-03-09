@@ -2,31 +2,39 @@ export const sidebarNav=[
     {
         name:"Dashboard",
         href:"/dashboard",
-        isSuperAdmin:false,
-        isAdmin:false,
+        isSuperAdmin:true,
+        isAdmin:true,
+        isSubAdmin:true,
     },
     {
         name:"Admins",
         href:"/admins",
         isSuperAdmin:true,
         isAdmin:true,
+        isSubAdmin:false,
     },
     {
         name:"Questions",
         href:"/questions",
         isSuperAdmin:true,
         isAdmin:true,
+        isSubAdmin:true,
+
     },
     {
         name:"Projects",
         href:"/projects",
         isSuperAdmin:true,
         isAdmin:false,
+        isSubAdmin:false,
+
     },
     {
         name:"Files",
         href:"/files",
         isSuperAdmin:true,
-        isAdmin:false,
+        isAdmin:true,
+        isSubAdmin:true,
+
     },
 ]

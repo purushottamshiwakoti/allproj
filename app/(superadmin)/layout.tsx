@@ -1,7 +1,8 @@
 import { Navbar } from "@/components/navbar";
 import { Sidebar } from "@/components/sidebar";
 import { AuthUser } from "@/lib/auth-user";
-import { notFound } from "next/navigation";
+import db from "@/lib/db";
+import { notFound, redirect } from "next/navigation";
 import React from "react";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
@@ -9,6 +10,20 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   if (!user) {
     notFound();
   }
+  const projects = await db.project.findFirst({
+    where: {
+      userIds: {
+        has: user.id,
+      },
+    },
+  });
+
+  if (projects) {
+    if (user.role == "ADMIN" || (user.role == "SUBADMIN" && projects)) {
+      redirect(projects.id);
+    }
+  }
+
 
   return (
     <div>
