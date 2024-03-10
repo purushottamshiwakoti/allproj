@@ -1,27 +1,25 @@
 "use client";
 
-import { folderSchema, projectSchema } from "@/schemas";
+import { folderSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { addFolder } from "@/actions/file";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useTransition } from "react";
-import { addProject } from "@/actions/project";
-import { toast } from "sonner";
-import { useParams, useRouter } from "next/navigation";
 import useProjectlDialog from "@/hooks/use-project-dialog";
-import { addFolder } from "@/actions/file";
+import { useParams, useRouter } from "next/navigation";
+import { useTransition } from "react";
+import { toast } from "sonner";
 
 export const AddFolderForm = ({ id }: { id: string }) => {
   const params = useParams();

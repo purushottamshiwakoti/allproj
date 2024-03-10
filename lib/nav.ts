@@ -14,6 +14,27 @@ export const sidebarNav=[
         isSubAdmin:false,
     },
     {
+        name:"Category",
+        href:"/category",
+        isSuperAdmin:true,
+        isAdmin:true,
+        isSubAdmin:false,
+    },
+    {
+        name:"SubCategory",
+        href:"/sub-category",
+        isSuperAdmin:true,
+        isAdmin:true,
+        isSubAdmin:false,
+    },
+    {
+        name:"QuestionType",
+        href:"/question-type",
+        isSuperAdmin:true,
+        isAdmin:true,
+        isSubAdmin:false,
+    },
+    {
         name:"Questions",
         href:"/questions",
         isSuperAdmin:true,

@@ -32,16 +32,18 @@ model User {
 }
 
 model Project {
-  id         String     @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  slug       String     @unique
-  folderIds  String[]   @db.ObjectId
-  folders    Folder[]   @relation(fields: [folderIds], references: [id])
-  created_at DateTime   @default(now())
-  updated_at DateTime   @updatedAt
-  users      User[]     @relation(fields: [userIds], references: [id])
-  questions  Question[]
-  userIds    String[]   @db.ObjectId
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  slug            String           @unique
+  folderIds       String[]         @db.ObjectId
+  folders         Folder[]         @relation(fields: [folderIds], references: [id])
+  created_at      DateTime         @default(now())
+  updated_at      DateTime         @updatedAt
+  categories      Category[]
+  users           User[]           @relation(fields: [userIds], references: [id])
+  questions       Question[]
+  userIds         String[]         @db.ObjectId
+  typeofQuestions TypeOfQuestion[]
 }
 
 model Folder {
@@ -104,8 +106,42 @@ model Question {
   option3Audio   String?
   option3Video   String?
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  Project    Project? @relation(fields: [projectId], references: [id])
-  projectId  String?  @db.ObjectId
+  created_at       DateTime        @default(now())
+  updated_at       DateTime        @updatedAt
+  Project          Project?        @relation(fields: [projectId], references: [id])
+  projectId        String?         @db.ObjectId
+  TypeOfQuestion   TypeOfQuestion? @relation(fields: [typeOfQuestionId], references: [id])
+  typeOfQuestionId String?         @db.ObjectId
+}
+
+model Category {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  slug          String        @unique
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+  subCategories SubCategory[]
+  Project       Project?      @relation(fields: [projectId], references: [id])
+  projectId     String?       @db.ObjectId
+}
+
+model SubCategory {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  slug       String    @unique
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  Category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?   @db.ObjectId
+}
+
+model TypeOfQuestion {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  slug       String     @unique
+  questions  Question[]
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  Project    Project?   @relation(fields: [projectId], references: [id])
+  projectId  String?    @db.ObjectId
 }
