@@ -7,6 +7,7 @@ import React from "react";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await AuthUser();
+  console.log("user ho ma", user);
   if (!user) {
     notFound();
   }
@@ -23,7 +24,6 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
       redirect(projects.id);
     }
   }
-
 
   return (
     <div>

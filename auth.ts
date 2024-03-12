@@ -44,8 +44,8 @@ export const {
     },
   },
   adapter: PrismaAdapter(db),
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.AUTH_SECRET,
   session: { strategy: "jwt" },
-  basePath:"/api/auth",
+  // basePath:"/api/auth",
   ...authConfig,
 });
