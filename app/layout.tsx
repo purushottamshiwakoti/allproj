@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import StoreProvider from "@/redux/store-provider";
 import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
 

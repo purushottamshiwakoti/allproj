@@ -99,7 +99,7 @@ export const FileUploader = ({
         >
           <input {...getInputProps()} />
           <p className="text-gray-600 flex items-center justify-center h-full capitalize">
-            Drag 'n' drop to {name} here, or click to select one
+            Drag and drop to {name} here, or click to select one
           </p>
         </div>
       ) : (

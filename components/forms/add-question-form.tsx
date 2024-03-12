@@ -23,7 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -31,13 +31,53 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Input } from "../ui/input";
+import { addQuestion } from "@/actions/question";
 
-export const AddQuestionForm = () => {
+interface addQuestionFormProps {
+  allquestionType: {
+    id: string;
+    name: string;
+    slug: string;
+    created_at: Date;
+    updated_at: Date;
+    projectId: string | null;
+  }[];
+  categoriesWithSubcategories: {
+    subcategories: {
+      id: string;
+      name: string;
+      slug: string;
+      created_at: Date;
+      updated_at: Date;
+      categoryId: string | null;
+    }[];
+    id: string;
+    name: string;
+    slug: string;
+    created_at: Date;
+    updated_at: Date;
+    projectId: string | null;
+  }[];
+}
+
+export const AddQuestionForm = ({
+  categoriesWithSubcategories,
+  allquestionType,
+}: addQuestionFormProps) => {
   const router = useRouter();
+  const params = useParams();
+
   const [isPending, startTransistion] = useTransition();
   const [questionType, setQuestionType] = useState("text");
-
-  //  all states here image audio video
+  const [category, setCategory] = useState<null | string>(null);
+  const subcategory = categoriesWithSubcategories
+    .filter((item) => item.id === category)
+    .flatMap((sub) =>
+      sub.subcategories.map((i) => ({
+        id: i.id,
+        name: i.name,
+      }))
+    );
 
   // for question
 
@@ -69,12 +109,26 @@ export const AddQuestionForm = () => {
       option3Image: "",
       option3Audio: "",
       option3Video: "",
+      categoryId: "",
+      subCategoryId: "",
+      typeOfQuestionId: "",
+      projectId: "",
     },
   });
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof questionSchema>) {
-    console.log(values);
+    startTransistion(() => {
+      addQuestion(values, params.id as string).then((data) => {
+        if (data?.succcess) {
+          toast.success(data.succcess);
+        }
+
+        if (data?.error) {
+          toast.success(data.error);
+        }
+      });
+    });
   }
   return (
     <div>
@@ -256,7 +310,7 @@ export const AddQuestionForm = () => {
                         <FormControl>
                           <Checkbox
                             checked={field.value}
-                            onChange={(value) => field.onChange(value)}
+                            onCheckedChange={field.onChange}
                             disabled={isPending}
                           />
                         </FormControl>
@@ -715,7 +769,7 @@ export const AddQuestionForm = () => {
               <div className="space-y-5">
                 <FormField
                   control={form.control}
-                  name="option"
+                  name="typeOfQuestionId"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Type of question</FormLabel>
@@ -725,19 +779,15 @@ export const AddQuestionForm = () => {
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select a verified email to display" />
+                            <SelectValue placeholder="Select a type of question" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="m@example.com">
-                            m@example.com
-                          </SelectItem>
-                          <SelectItem value="m@google.com">
-                            m@google.com
-                          </SelectItem>
-                          <SelectItem value="m@support.com">
-                            m@support.com
-                          </SelectItem>
+                          {allquestionType.map((item) => (
+                            <SelectItem value={item.id} key={item.id}>
+                              {item.name}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
 
@@ -747,29 +797,27 @@ export const AddQuestionForm = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="option"
+                  name="categoryId"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Category</FormLabel>
+                      <FormLabel>Select Category</FormLabel>
                       <Select
-                        onValueChange={field.onChange}
+                        onValueChange={(value) => {
+                          field.onChange(value), setCategory(value);
+                        }}
                         defaultValue={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select a verified email to display" />
+                            <SelectValue placeholder="Select category" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="m@example.com">
-                            m@example.com
-                          </SelectItem>
-                          <SelectItem value="m@google.com">
-                            m@google.com
-                          </SelectItem>
-                          <SelectItem value="m@support.com">
-                            m@support.com
-                          </SelectItem>
+                          {categoriesWithSubcategories.map((item) => (
+                            <SelectItem value={item.id} key={item.id}>
+                              {item.name}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
 
@@ -779,7 +827,7 @@ export const AddQuestionForm = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="option"
+                  name="subCategoryId"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Sub Category</FormLabel>
@@ -789,19 +837,19 @@ export const AddQuestionForm = () => {
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select a verified email to display" />
+                            <SelectValue placeholder="Select a sub category" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="m@example.com">
-                            m@example.com
-                          </SelectItem>
-                          <SelectItem value="m@google.com">
-                            m@google.com
-                          </SelectItem>
-                          <SelectItem value="m@support.com">
-                            m@support.com
-                          </SelectItem>
+                          {category ? (
+                            subcategory.map((item) => (
+                              <SelectItem value={item.id} key={item.id}>
+                                {item.name}
+                              </SelectItem>
+                            ))
+                          ) : (
+                            <p>Please select category first</p>
+                          )}
                         </SelectContent>
                       </Select>
 

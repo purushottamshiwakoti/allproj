@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import useProjectlDialog from "@/hooks/use-project-dialog";
 import { PlusCircle } from "lucide-react";
+import { AddCategoryForm } from "../forms/add-category-form";
 
 export const AddCategoryDialog = () => {
   const { isOpen, setIsOpen } = useProjectlDialog();
@@ -16,7 +17,9 @@ export const AddCategoryDialog = () => {
             Add Category
           </Button>
         </DialogTrigger>
-        <DialogContent></DialogContent>
+        <DialogContent>
+          <AddCategoryForm />
+        </DialogContent>
       </Dialog>
     </>
   );

@@ -3,6 +3,7 @@ import React from "react";
 import { columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import db from "@/lib/db";
+import { Button } from "@/components/ui/button";
 
 async function getData() {
   const admins = await db.user.findMany({
@@ -31,7 +32,9 @@ const AdminsPage = async ({ params }: { params: any }) => {
 
   return (
     <div>
-      <AddButton href={`/${id}/admins/add`} />
+      <div className="flex">
+        <AddButton href={`/${id}/admins/add`} />
+      </div>
       <div className="mt-5">
         <DataTable columns={columns} data={data} />
       </div>

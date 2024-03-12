@@ -1,6 +1,5 @@
 "use client";
 
-import { fetchUsers } from "@/redux/features/fileSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export const GetFiles = () => {
@@ -10,7 +9,7 @@ export const GetFiles = () => {
   return (
     <>
       <div>Get files</div>
-      <button onClick={() => dispatch(fetchUsers())}>Okay</button>
+      <button>Okay</button>
     </>
   );
 };

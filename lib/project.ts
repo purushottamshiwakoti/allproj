@@ -14,3 +14,21 @@ export const getProjectBySlug=async(slug:string)=>{
     }
 
 }
+export const getProjectById=async(id:string)=>{
+    console.log(id);
+    try {
+        const project=await db.project.findUnique({
+            where:{
+                id
+            }
+        });
+        console.log(project);
+        return project;
+        
+    } catch (error) {
+        console.log(error);
+
+        return null;
+    }
+
+}

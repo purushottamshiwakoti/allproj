@@ -76,7 +76,7 @@ const FilesPage = async ({
         <div>
           <div className="mt-4 grid grid-cols-4 gap-10">
             {subFolder.map((item) => (
-              <Link href={`files/${item.id}`}>
+              <Link href={`files/${item.id}`} key={item.id}>
                 <div
                   key={item.id}
                   className="p-20 border-2 border-dashed flex items-center justify-center cursor-pointer"

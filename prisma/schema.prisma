@@ -111,34 +111,40 @@ model Question {
   Project          Project?        @relation(fields: [projectId], references: [id])
   projectId        String?         @db.ObjectId
   TypeOfQuestion   TypeOfQuestion? @relation(fields: [typeOfQuestionId], references: [id])
+  category         Category?       @relation(fields: [categoryId], references: [id])
+  subCategory      SubCategory?    @relation(fields: [subCategoryId], references: [id])
   typeOfQuestionId String?         @db.ObjectId
+  categoryId       String?         @db.ObjectId
+  subCategoryId    String?         @db.ObjectId
 }
 
 model Category {
   id            String        @id @default(auto()) @map("_id") @db.ObjectId
   name          String
-  slug          String        @unique
+  slug          String
   created_at    DateTime      @default(now())
   updated_at    DateTime      @updatedAt
   subCategories SubCategory[]
   Project       Project?      @relation(fields: [projectId], references: [id])
   projectId     String?       @db.ObjectId
+  Question      Question[]
 }
 
 model SubCategory {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
   name       String
-  slug       String    @unique
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  Category   Category? @relation(fields: [categoryId], references: [id])
-  categoryId String?   @db.ObjectId
+  slug       String
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  Category   Category?  @relation(fields: [categoryId], references: [id])
+  categoryId String?    @db.ObjectId
+  Question   Question[]
 }
 
 model TypeOfQuestion {
   id         String     @id @default(auto()) @map("_id") @db.ObjectId
   name       String
-  slug       String     @unique
+  slug       String
   questions  Question[]
   created_at DateTime   @default(now())
   updated_at DateTime   @updatedAt

@@ -188,7 +188,7 @@ export const AddFiles = ({
             >
               <input {...getInputProps()} />
               <p className="text-gray-600 flex items-center justify-center h-full">
-                Drag 'n' drop an image, audio, or video here, or click to select
+                Drag and drop an image, audio, or video here, or click to select
                 one
               </p>
             </div>

@@ -23,6 +23,33 @@ export const folderSchema = z.object({
     }),
    
 });
+export const categorySchema = z.object({
+    name: z.string().min(2,{
+        message: "Category name must be at least 2 characters"
+    }).max(50,{
+        message: "Category name cannot be more than 50 characters"
+    }),
+   
+});
+export const questionTypeSchema = z.object({
+    name: z.string().min(2,{
+        message: "Question type must be at least 2 characters"
+    }).max(50,{
+        message: "Question type cannot be more than 50 characters"
+    }),
+   
+});
+export const subCategorySchema = z.object({
+    name: z.string().min(2,{
+        message: "Question type must be at least 2 characters"
+    }).max(50,{
+        message: "Question type cannot be more than 50 characters"
+    }),
+    categoryId:z.string().min(1,{
+        message:"Please select a category"
+    })
+   
+});
 export const userSchema = z.object({
     fullName: z.string().min(2,{
         message: "Full Name must be at least 2 characters"
@@ -62,6 +89,16 @@ export const questionSchema = z.object({
     option3Image: z.optional(z.any()),
     option3Audio: z.optional(z.any()),
     option3Video: z.optional(z.any()),
+    projectId: z.optional(z.any()),
+    typeOfQuestionId:z.string().min(1,{
+        message:"Please select a question type"
+    }),
+    categoryId:z.string().min(1,{
+        message:"Please select a category"
+    }),
+    subCategoryId:z.string().min(1,{
+        message:"Please select a question subcategory"
+    })
    
   
   });
