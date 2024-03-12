@@ -46,5 +46,6 @@ export const {
   adapter: PrismaAdapter(db),
   secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: "jwt" },
+  basePath:"/api/auth",
   ...authConfig,
 });
