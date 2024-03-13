@@ -24,6 +24,7 @@ export const AddFiles = ({
 }) => {
   const params = useParams();
   const router = useRouter();
+  const reload = useRouter();
   const projectId = params.id;
   const folderId = params.folder;
   const [isPending, startTransistion] = useTransition();
@@ -128,6 +129,7 @@ export const AddFiles = ({
         setAudioFiles([]);
         setImagesFiles([]);
         router.refresh();
+        location.reload();
       } else {
         // Handle response error
         const responseData = await response.json();
