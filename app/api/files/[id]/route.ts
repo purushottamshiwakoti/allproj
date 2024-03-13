@@ -5,7 +5,6 @@ import db from "@/lib/db";
 import { exec } from 'child_process'; // Import exec for executing shell commands
 
 
-import { exec } from "child_process"; // Import exec function from child_process
 
 
 export async function POST(req: NextRequest, params:     any) {
