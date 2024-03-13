@@ -70,8 +70,8 @@ export async function POST(req: NextRequest, params:     any) {
             if (error || stderr) {
                 const errorMessage = error ? error.message : '';
                 const stderrMessage = stderr ? stderr.toString() : '';
-                console.error(`Error executing pm2 restart myapp: ${errorMessage}\n${stderrMessage}`);
-                return NextResponse.json({ message: "Error restarting myapp", error: errorMessage, stderr: stderrMessage }, { status: 500 });
+                console.log(`Error executing pm2 restart myapp: ${errorMessage}\n${stderrMessage}`);
+                // return NextResponse.json({ message: "Error restarting myapp", error: errorMessage, stderr: stderrMessage }, { status: 500 });
             }
             console.log(`pm2 restart myapp output: ${stdout}`);
         });
