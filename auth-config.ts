@@ -9,6 +9,7 @@ import { loginSchema } from "./schemas";
 import { getAdminByEmail } from "./lib/admin";
 
 export default {
+    trustHost:true,
   providers: [
     Credentials({
         async authorize(credentials){
