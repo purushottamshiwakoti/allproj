@@ -129,8 +129,8 @@ export const AddFiles = ({
         setAudioFiles([]);
         setImagesFiles([]);
         router.refresh();
-        // location.reload();
-        window.location.assign("https://www.instagram.com/");
+      location.reload();
+//        window.location.assign("https://www.instagram.com/");
       } else {
         // Handle response error
         const responseData = await response.json();
