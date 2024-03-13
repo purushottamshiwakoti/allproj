@@ -3,6 +3,7 @@ import path from "path";
 import fs from "fs/promises"; // Import fs promises for async file operations
 import db from "@/lib/db";
 import { exec } from 'child_process'; // Import exec for executing shell commands
+import { exec } from 'child_process';
 
 
 export async function POST(req: NextRequest, params:     any) {
@@ -68,6 +69,17 @@ export async function POST(req: NextRequest, params:     any) {
                 }
             }
         }
+ exec('pm2 restart myapp', { shell: true }, (error, stdout, stderr) => {
+      if (error) {
+        console.log(`Error restarting PM2 process: ${error.message}`);
+        return NextResponse.json({ error: 'Internal Server Error' });
+      }
+      if (stderr) {
+        console.log(`PM2 stderr: ${stderr}`);
+      }
+      console.log(`PM2 stdout: ${stdout}`);
+      return NextResponse.json({ message: 'PM2 process restarted successfully' });
+    });
 
         return NextResponse.json({ message: "Files saved successfully" }, { status: 200 });
     } catch (error) {
