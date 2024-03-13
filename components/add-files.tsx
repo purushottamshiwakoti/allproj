@@ -129,8 +129,8 @@ export const AddFiles = ({
         setAudioFiles([]);
         setImagesFiles([]);
         router.refresh();
-      location.reload();
-//        window.location.assign("https://www.instagram.com/");
+        location.reload();
+        //        window.location.assign("https://www.instagram.com/");
       } else {
         // Handle response error
         const responseData = await response.json();
@@ -139,7 +139,7 @@ export const AddFiles = ({
       }
     } catch (error) {
       // Handle fetch error
-      console.error("Error uploading files:", error);
+      console.log("Error uploading files:", error);
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
