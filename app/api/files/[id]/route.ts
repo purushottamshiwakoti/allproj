@@ -3,6 +3,9 @@ import path from "path";
 import fs from "fs/promises"; // Import fs promises for async file operations
 import db from "@/lib/db";
 
+import { exec } from "child_process"; // Import exec function from child_process
+
+
 export async function POST(req: NextRequest, params:     any) {
     try {
         const folder = await db.subFolder.findUnique({
@@ -66,6 +69,21 @@ export async function POST(req: NextRequest, params:     any) {
                 }
             }
         }
+     
+
+        exec("pm2 restart myapp", (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error executing npm run dev: ${error}`);
+                return;
+            }
+            console.log(`npm run dev output: ${stdout}`);
+        });
+
+
+  
+
+
+
 
         return NextResponse.json({ message: "Files saved successfully" }, { status: 200 });
     } catch (error) {
