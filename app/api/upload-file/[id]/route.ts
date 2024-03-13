@@ -1,8 +1,6 @@
 import fs from 'fs';
 import db from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
-import { exec } from 'child_process'; // Import exec for executing shell commands
-
 import path from "path";
 
 export async function POST(req: NextRequest, params: any) {
@@ -42,22 +40,9 @@ export async function POST(req: NextRequest, params: any) {
         
         // Write the file to disk
         fs.writeFileSync(filePath, buffer);
-
         return NextResponse.json({ relativePath }, { status: 200 });
       }
     }
- exec('pm2 restart myapp', (error, stdout, stderr) => {
-                        if (error) {
-                            console.error(`Error restarting application: ${error.message}`);
-                            return NextResponse.json({ message: "Error restarting application", error }, { status: 500 });
-                        }
-                        if (stderr) {
-                            console.error(`Error restarting application: ${stderr}`);
-                            return NextResponse.json({ message: "Error restarting application", error: stderr }, { status: 500 });
-                        }
-                        console.log(`Application restarted: ${stdout}`);
-                    });
-
   } catch (error) {
     console.log("error is", error);
     return NextResponse.json({ message: "Something went wrong while uploading file" }, { status: 500 });
