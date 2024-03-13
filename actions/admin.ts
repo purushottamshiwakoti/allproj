@@ -12,7 +12,6 @@ import { AuthError } from "next-auth";
 
 export const addAdmin=async(values: z.infer<typeof userSchema>,id:any)=>{
     try {
-        console.log(id)
         const validateFeilds=userSchema.safeParse(values);
         if(!validateFeilds.success){
             return {error:"Invalid feilds"}
@@ -118,10 +117,8 @@ export const login=async(values: z.infer<typeof loginSchema>,callbackUrl?:string
     if(!user){
         return {error:"Invalid credentials"}
     }
-    console.log(user)
     
     const comparePassword=await bcrypt.compare(password,user.password);
-    console.log(comparePassword)
     
     if(!comparePassword){
         return {error:"Invalid credentials"}

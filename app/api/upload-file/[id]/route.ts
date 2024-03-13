@@ -35,7 +35,6 @@ export async function POST(req: NextRequest, params: any) {
           filePath = path.join(process.cwd(), "public", projectFolder, fileName);
         }
         
-       console.log(filePath)
        const relativePath = path.relative(path.join(process.cwd(), "public"), filePath);
         
         // Write the file to disk

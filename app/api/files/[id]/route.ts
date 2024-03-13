@@ -22,7 +22,6 @@ export async function POST(req: NextRequest, params:     any) {
         const folderName = folder.slug;
 
         const data: any = await req.formData();
-        console.log(data);
 
         let projectName: string | undefined;
 
@@ -40,15 +39,11 @@ export async function POST(req: NextRequest, params:     any) {
             if (!projectName) {
                 return NextResponse.json({ message: "Project name not found" }, { status: 400 });
             }
-            console.log(projectName)
 
             if (file && typeof file === "object") {
-                console.log(file)
                 const byteData = await file.arrayBuffer();
                 const buffer = Buffer.from(byteData);
-                console.log(buffer) 
                 const filePath = path.join(process.cwd(), "public", projectName, folderName, file.name);
-                console.log(filePath);
 
                 try {
                     await fs.writeFile(filePath, buffer);

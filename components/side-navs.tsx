@@ -9,7 +9,6 @@ import { useGetCurrentUser } from "@/hooks/get-auth-user";
 export const SideNavs = () => {
   const params = useParams();
   const path = usePathname();
-  console.log(path);
   const user = useGetCurrentUser();
 
   // Filter navigation items based on user's role

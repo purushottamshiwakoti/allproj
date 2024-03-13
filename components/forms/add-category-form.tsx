@@ -27,7 +27,6 @@ export const AddCategoryForm = () => {
   const router = useRouter();
   const params = useParams();
   const id = params.id;
-  console.log(id);
   const [isPending, startTransistion] = useTransition();
   const form = useForm<z.infer<typeof categorySchema>>({
     resolver: zodResolver(categorySchema),
@@ -38,7 +37,6 @@ export const AddCategoryForm = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof categorySchema>) {
-    console.log(values);
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     startTransistion(() => {

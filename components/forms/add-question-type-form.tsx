@@ -28,7 +28,6 @@ export const AddQuestionTypeForm = () => {
   const router = useRouter();
   const params = useParams();
   const id = params.id;
-  console.log(id);
   const [isPending, startTransistion] = useTransition();
   const form = useForm<z.infer<typeof questionTypeSchema>>({
     resolver: zodResolver(questionTypeSchema),
@@ -39,7 +38,6 @@ export const AddQuestionTypeForm = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof questionTypeSchema>) {
-    console.log(values);
 
     startTransistion(() => {
       addQuestionType(values, id as string).then((data) => {

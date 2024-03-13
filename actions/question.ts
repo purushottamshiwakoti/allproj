@@ -45,6 +45,7 @@ export const addBulkQuestion = async (values: z.infer<typeof questionSchema>, id
       });
   
      if(upload){
+      console.log(upload)
         return { success: "Successfully created questions " };
      }
     } catch (error) {

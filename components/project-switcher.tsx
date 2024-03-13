@@ -21,7 +21,6 @@ import { useGetCurrentUser } from "@/hooks/get-auth-user";
 
 export const ProjectSwitcher = ({ data }: { data: Project[] }) => {
   const user = useGetCurrentUser();
-  console.log(user);
   const params = useParams();
   const id: string | undefined = Array.isArray(params.id)
     ? params.id[0]

@@ -20,12 +20,8 @@ async function getData() {
 
 const AdminsPage = async ({ params }: { params: any }) => {
   const id = params.id;
-  console.log(id);
   const adminsData = await getData();
-  console.log(adminsData);
-  console.log(
-    adminsData.filter((item) => item.projects?.filter((i) => i.id != id))
-  );
+
   const data = adminsData.filter((item) =>
     item.projects?.find((i) => i.id == id)
   );

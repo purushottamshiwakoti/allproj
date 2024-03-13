@@ -35,7 +35,6 @@ export const AddFolderForm = ({ id }: { id: string }) => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof folderSchema>) {
-    console.log(values);
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     startTransistion(() => {

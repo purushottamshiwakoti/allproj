@@ -31,7 +31,6 @@ export const AddUserForm = () => {
   const path = usePathname();
   const params = useParams();
   const id = params.id;
-  console.log(id);
   const router = useRouter();
   const [isPending, startTransistion] = useTransition();
   const form = useForm<z.infer<typeof userSchema>>({
@@ -46,7 +45,6 @@ export const AddUserForm = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof userSchema>) {
-    console.log(values);
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     startTransistion(() => {

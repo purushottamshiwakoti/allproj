@@ -78,7 +78,6 @@ export const BulkUpload = () => {
     const parsedResult = Papa.parse<DataProps>(d, { header: true });
     const { data } = parsedResult;
     data.pop();
-    console.log(data);
     if (data) {
       setCsvData(data);
     }
