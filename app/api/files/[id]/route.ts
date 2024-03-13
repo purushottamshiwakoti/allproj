@@ -71,14 +71,20 @@ export async function POST(req: NextRequest, params:     any) {
             }
         }
      
-
         exec("pm2 restart myapp", (error, stdout, stderr) => {
             if (error) {
-                console.error(`Error executing npm run dev: ${error}`);
-                return;
+                console.error(`Error executing pm2 restart myapp: ${error}`);
+                if (stderr) {
+                    console.error(`stderr: ${stderr}`);
+                }
+                return NextResponse.json({ message: "Error restarting myapp", error }, { status: 500 });
             }
-            console.log(`npm run dev output: ${stdout}`);
+            console.log(`pm2 restart myapp output: ${stdout}`);
+            if (stderr) {
+                console.error(`stderr: ${stderr}`);
+            }
         });
+        
 
 
   
