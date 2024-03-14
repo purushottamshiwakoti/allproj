@@ -56,32 +56,34 @@ export const columns: ColumnDef<Category>[] = [
 
   {
     id: "actions",
-    cell: ({ row }) => {
-      const user = row.original;
-      const params = useParams();
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem asChild>
-              <Link
-                href={`/${params.id}/questions/${user.id}`}
-                className="cursor-pointer"
-              >
-                Edit Question
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    cell: CustomCell,
   },
 ];
+
+function CustomCell({ row }: { row: any }) {
+  const user = row.original;
+  const params = useParams();
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuItem asChild>
+          <Link
+            href={`/${params.id}/questions/${user.id}`}
+            className="cursor-pointer"
+          >
+            Edit Question
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}

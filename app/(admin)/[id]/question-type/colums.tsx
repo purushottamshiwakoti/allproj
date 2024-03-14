@@ -42,55 +42,53 @@ export const columns: ColumnDef<Category>[] = [
 
   {
     id: "actions",
-    cell: ({ row }) => {
-      const user = row.original;
-      const [clicked, setClicked] = useState(false);
-
-      const params = useParams();
-
-      const handleClick = (id: string) => {
-        setClicked(true);
-        toast.success("Successfully copied question type id");
-        navigator.clipboard.writeText(id);
-
-        // Reset the clicked state after a short delay to allow the animation to play
-        setTimeout(() => {
-          setClicked(false);
-        }, 600); // Adjust the duration of the animation (in milliseconds) as needed
-      };
-
-      return (
-        <div className="flex items-center space-x-2 cursor-pointer ">
-          {clicked ? (
-            <Check className="h-4 w-4 p-0 text-emerald-500" />
-          ) : (
-            <Copy
-              className="h-4 w-4 p-0"
-              onClick={() => handleClick(user.id)}
-            />
-          )}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem asChild>
-                <Link
-                  href={`/${params.id}/question-type/${user.id}`}
-                  className="cursor-pointer"
-                >
-                  Edit Question Type
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      );
-    },
+    cell: CustomCell,
   },
 ];
+
+function CustomCell({ row }: { row: any }) {
+  const user = row.original;
+  const [clicked, setClicked] = useState(false);
+  const params = useParams();
+
+  const handleClick = (id: string) => {
+    setClicked(true);
+    toast.success("Successfully copied question type id");
+    navigator.clipboard.writeText(id);
+
+    // Reset the clicked state after a short delay to allow the animation to play
+    setTimeout(() => {
+      setClicked(false);
+    }, 600); // Adjust the duration of the animation (in milliseconds) as needed
+  };
+
+  return (
+    <div className="flex items-center space-x-2 cursor-pointer ">
+      {clicked ? (
+        <Check className="h-4 w-4 p-0 text-emerald-500" />
+      ) : (
+        <Copy className="h-4 w-4 p-0" onClick={() => handleClick(user.id)} />
+      )}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem asChild>
+            <Link
+              href={`/${params.id}/question-type/${user.id}`}
+              className="cursor-pointer"
+            >
+              Edit Question Type
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  );
+}
