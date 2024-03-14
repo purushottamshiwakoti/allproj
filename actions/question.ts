@@ -46,10 +46,52 @@ export const addBulkQuestion = async (values: z.infer<typeof questionSchema>, id
   
      if(upload){
       console.log(upload)
-        return { success: "Successfully created questions " };
+        return { success: "Successfully created question " };
      }
     } catch (error) {
       console.log(error);
       return { error: "Something went wrong" };
     }
   };
+
+
+  export const editQuestion=async(values: z.infer<typeof questionSchema>,id:string,qid:string)=>{
+    try {
+        const validateFeilds=questionSchema.safeParse(values);
+        if(!validateFeilds.success){
+            return {error:"Invalid feilds"}
+        };
+         values.projectId=id;
+
+        await db.question.update({
+          where:{
+            id:qid
+          },
+            data:{
+                ...values
+            }
+        });
+
+        return {succcess:"Successfully updated question "}
+    } catch (error) {
+        console.log(error);
+        return {error:"Something went wrong"}
+    }
+
+}
+
+
+export const deleteQuestion=async(id:string)=>{
+  try {
+    await db.question.delete({
+      where:{
+        id
+      }
+    });
+    return {success:"Successfully deleted question "}
+    
+  } catch (error) {
+    console.log(error);
+        return {error:"Something went wrong"}
+  }
+}

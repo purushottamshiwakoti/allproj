@@ -18,6 +18,7 @@ export const FileUploader = ({
   value: string;
   onChange: (src: string) => void;
 }) => {
+  const [removedValue, setRemovedValue] = useState(false);
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<{ url: string; type: string } | null>(null);
   const params = useParams();
@@ -90,6 +91,11 @@ export const FileUploader = ({
       ? "https://www.instantbackgroundremover.com"
       : "http://localhost:3000";
 
+  const handleRemoveFile = () => {
+    setRemovedValue(true);
+    setFile(null);
+  };
+
   return (
     <>
       {loading && (
@@ -97,7 +103,7 @@ export const FileUploader = ({
           <LoaderIcon className="animate-spin" />
         </div>
       )}
-      {!file && !value ? (
+      {!file && removedValue ? (
         <div
           {...getRootProps()}
           className="dropzone text-center border-dashed border-2 border-gray-300 p-6  h-[20rem] w-[20rem] rounded-md"
@@ -120,7 +126,7 @@ export const FileUploader = ({
                 />
                 <XCircle
                   className="text-red-500 absolute right-0 rounded-md  w-10 h-10 cursor-pointer"
-                  // onClick={() => handleRemoveImage(image)}
+                  onClick={() => handleRemoveFile()}
                 />
               </div>
             ) : file.type.includes("audio") ? (
@@ -139,12 +145,13 @@ export const FileUploader = ({
                 </video>
                 <XCircle
                   className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0"
-                  // onClick={() => handleRemoveVideo(video)}
+                  onClick={() => handleRemoveFile()}
                 />
               </div>
             ) : null)}
 
           {value !== null &&
+            !removedValue &&
             (type.includes("image") ? (
               <div>
                 <Image
@@ -156,7 +163,7 @@ export const FileUploader = ({
                 />
                 <XCircle
                   className="text-red-500 absolute right-0 rounded-md  w-10 h-10 cursor-pointer"
-                  // onClick={() => handleRemoveImage(image)}
+                  onClick={() => handleRemoveFile()}
                 />
               </div>
             ) : type.includes("audio") ? (

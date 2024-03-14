@@ -31,7 +31,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Input } from "../ui/input";
-import { addQuestion } from "@/actions/question";
+import { addQuestion, deleteQuestion, editQuestion } from "@/actions/question";
 import { Question } from "@prisma/client";
 
 interface addQuestionFormProps {
@@ -69,6 +69,7 @@ export const EditQuestionForm = ({
 }: addQuestionFormProps) => {
   const router = useRouter();
   const params = useParams();
+  console.log(params);
   const [questionType, setQuestionType] = useState("");
 
   useEffect(() => {
@@ -139,11 +140,16 @@ export const EditQuestionForm = ({
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof questionSchema>) {
     startTransistion(() => {
-      addQuestion(values, params.id as string).then((data) => {
+      editQuestion(
+        values,
+        params.id as string,
+        params.questionId as string
+      ).then((data) => {
         if (data?.succcess) {
           toast.success(data.succcess);
+          router.refresh();
+          router.push(`/${params.id}/questions`);
         }
-
         if (data?.error) {
           toast.success(data.error);
         }
@@ -151,8 +157,39 @@ export const EditQuestionForm = ({
     });
   }
 
+  const handleDelete = () => {
+    const confirmation = confirm(
+      "Are you sure you want to delete this question! This action cannot be undone"
+    );
+
+    if (confirmation) {
+      startTransistion(() => {
+        deleteQuestion(params.questionId as string).then((data) => {
+          if (data?.error) {
+            toast.error(data.error);
+          }
+          if (data?.success) {
+            toast.success(data.success);
+            router.refresh();
+
+            router.push(`/${params.id}/questions`);
+          }
+        });
+      });
+    }
+  };
+
   return (
     <div>
+      <div className="flex items-end justify-end">
+        <Button
+          variant={"destructive"}
+          onClick={handleDelete}
+          disabled={isPending}
+        >
+          Delete
+        </Button>
+      </div>
       <div>
         {/* select type of queestion  */}
         <div className="flex gap-5 text-primary mb-2">
