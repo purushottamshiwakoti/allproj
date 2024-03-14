@@ -58,3 +58,20 @@ export const addFolder=async(values: z.infer<typeof folderSchema>,id:string)=>{
     }
 }
 
+
+export const deleteFile=async(id:string)=>{
+
+    try{
+await db.files.delete({
+    where:{
+        id
+    }
+});
+return {success:"Successfully deleted file"}
+
+    }catch (error) {
+        console.log(error);
+        return {error:"Something went wrong"}
+    }
+
+}

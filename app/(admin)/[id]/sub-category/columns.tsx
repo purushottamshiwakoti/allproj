@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, Check, Copy, MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +12,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useState } from "react";
+import { useParams } from "next/navigation";
+import { toast } from "sonner";
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -45,24 +49,54 @@ export const columns: ColumnDef<Category>[] = [
     cell: ({ row }) => {
       const user = row.original;
 
+      const [clicked, setClicked] = useState(false);
+
+      const params = useParams();
+
+      const handleClick = (id: string) => {
+        setClicked(true);
+        toast.success("Successfully copied category id");
+        navigator.clipboard.writeText(id);
+
+        // Reset the clicked state after a short delay to allow the animation to play
+        setTimeout(() => {
+          setClicked(false);
+        }, 600); // Adjust the duration of the animation (in milliseconds) as needed
+      };
+
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(user.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+          <div className="flex items-center space-x-2 cursor-pointer ">
+            {clicked ? (
+              <Check className="h-4 w-4 p-0 text-emerald-500" />
+            ) : (
+              <Copy
+                className="h-4 w-4 p-0"
+                onClick={() => handleClick(user.id)}
+              />
+            )}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuItem asChild>
+                  <Link
+                    href={`/${params.id}/sub-category/${user.id}`}
+                    className="cursor-pointer"
+                  >
+                    Edit Sub Category
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </>
       );
     },
   },

@@ -12,6 +12,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -56,6 +58,7 @@ export const columns: ColumnDef<Category>[] = [
     id: "actions",
     cell: ({ row }) => {
       const user = row.original;
+      const params = useParams();
 
       return (
         <DropdownMenu>
@@ -67,10 +70,13 @@ export const columns: ColumnDef<Category>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(user.id)}
-            >
-              Copy payment ID
+            <DropdownMenuItem asChild>
+              <Link
+                href={`/${params.id}/questions/${user.id}`}
+                className="cursor-pointer"
+              >
+                Edit Question
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
           </DropdownMenuContent>

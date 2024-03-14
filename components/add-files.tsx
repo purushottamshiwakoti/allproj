@@ -14,6 +14,7 @@ import { Files } from "@prisma/client";
 import { CustomPagination } from "./custom-pagination";
 import { getFileType } from "@/lib/file";
 import { downloadFiles } from "@/actions/csv-download";
+import { deleteFile } from "@/actions/file";
 
 export const AddFiles = ({
   filesData,
@@ -161,6 +162,23 @@ export const AddFiles = ({
     });
   }
 
+  const handleRemoveFile = (id: string) => {
+    const confirmation = confirm("Are you sure you want to remove this file?");
+    if (confirmation) {
+      startTransistion(() => {
+        deleteFile(id).then((data) => {
+          if (data?.error) {
+            toast.error(data.error);
+          }
+          if (data?.success) {
+            toast.success(data.success);
+            router.refresh();
+          }
+        });
+      });
+    }
+  };
+
   return (
     <>
       <div>
@@ -261,7 +279,10 @@ export const AddFiles = ({
                         <source src={`/${item.name}`} />
                         Your browser does not support the video element.
                       </video>
-                      {/* <XCircle className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0" /> */}
+                      <XCircle
+                        className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0"
+                        onClick={() => handleRemoveFile(item.id)}
+                      />
                     </div>
                   </div>
                 ) : getFileType(item.name) == "mp3" ? (
@@ -272,7 +293,7 @@ export const AddFiles = ({
                     </audio>
                     <XCircle
                       className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0"
-                      // onClick={() => handleRemoveAudio(audio)}
+                      onClick={() => handleRemoveFile(item.id)}
                     />
                   </div>
                 ) : (
@@ -285,7 +306,7 @@ export const AddFiles = ({
                     />
                     <XCircle
                       className="text-red-500 absolute right-0 cursor-pointer"
-                      // onClick={() => handleRemoveImage(image)}
+                      onClick={() => handleRemoveFile(item.id)}
                     />
                   </div>
                 )}

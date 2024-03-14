@@ -85,17 +85,22 @@ export const FileUploader = ({
     onDrop,
   });
 
+  const nextUrl =
+    process.env.NODE_ENV === "production"
+      ? "https://www.instantbackgroundremover.com"
+      : "http://localhost:3000";
+
   return (
     <>
       {loading && (
-        <div className="border-dashed border-2 border-gray-300 p-6  h-[20rem] w-[30rem] rounded-md flex items-center justify-center">
+        <div className="border-dashed border-2 border-gray-300 p-6  h-[20rem] w-[20rem] rounded-md flex items-center justify-center">
           <LoaderIcon className="animate-spin" />
         </div>
       )}
-      {!file ? (
+      {!file && !value ? (
         <div
           {...getRootProps()}
-          className="dropzone text-center border-dashed border-2 border-gray-300 p-6  h-[20rem] w-[30rem] rounded-md"
+          className="dropzone text-center border-dashed border-2 border-gray-300 p-6  h-[20rem] w-[20rem] rounded-md"
         >
           <input {...getInputProps()} />
           <p className="text-gray-600 flex items-center justify-center h-full capitalize">
@@ -103,40 +108,77 @@ export const FileUploader = ({
           </p>
         </div>
       ) : (
-        <div className="border-dashed border-2 border-gray-300 p-6  h-[20rem] w-[30rem] rounded-md relative">
-          {file.type.includes("image") ? (
-            <div>
-              <Image
-                src={file.url}
-                alt={`Uploaded Image `}
-                fill
-                className=" rounded-md"
-              />
-              <XCircle
-                className="text-red-500 absolute right-0 rounded-md  w-10 h-10 cursor-pointer"
-                // onClick={() => handleRemoveImage(image)}
-              />
-            </div>
-          ) : file.type.includes("audio") ? (
-            <div className=" ">
-              <audio controls className="relative ">
-                <source src={file.url} />
-                Your browser does not support the audio element.
-              </audio>
-              <XCircle className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0" />
-            </div>
-          ) : file.type.includes("video") ? (
-            <div className="h-[20rem] w-[20rem]  relative">
-              <video controls className="relative ">
-                <source src={file.url} />
-                Your browser does not support the video element.
-              </video>
-              <XCircle
-                className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0"
-                // onClick={() => handleRemoveVideo(video)}
-              />
-            </div>
-          ) : null}
+        <div className="border-dashed border-2 border-gray-300 p-6  h-[20rem] w-[20rem] rounded-md relative">
+          {file !== null &&
+            (file.type.includes("image") ? (
+              <div>
+                <Image
+                  src={file.url}
+                  alt={`Uploaded Image `}
+                  fill
+                  className=" rounded-md"
+                />
+                <XCircle
+                  className="text-red-500 absolute right-0 rounded-md  w-10 h-10 cursor-pointer"
+                  // onClick={() => handleRemoveImage(image)}
+                />
+              </div>
+            ) : file.type.includes("audio") ? (
+              <div className=" ">
+                <audio controls className="relative ">
+                  <source src={file.url} />
+                  Your browser does not support the audio element.
+                </audio>
+                <XCircle className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0" />
+              </div>
+            ) : file.type.includes("video") ? (
+              <div className="h-[20rem] w-[20rem]  relative">
+                <video controls className="relative ">
+                  <source src={file.url} />
+                  Your browser does not support the video element.
+                </video>
+                <XCircle
+                  className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0"
+                  // onClick={() => handleRemoveVideo(video)}
+                />
+              </div>
+            ) : null)}
+
+          {value !== null &&
+            (type.includes("image") ? (
+              <div>
+                <Image
+                  // src={`/${value}`}
+                  src={`${nextUrl}/${value}`}
+                  alt={`${value}`}
+                  fill
+                  className=" rounded-md"
+                />
+                <XCircle
+                  className="text-red-500 absolute right-0 rounded-md  w-10 h-10 cursor-pointer"
+                  // onClick={() => handleRemoveImage(image)}
+                />
+              </div>
+            ) : type.includes("audio") ? (
+              <div className=" ">
+                <audio controls className="relative ">
+                  <source src={`${nextUrl}/${value}`} />
+                  Your browser does not support the audio element.
+                </audio>
+                <XCircle className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0" />
+              </div>
+            ) : type.includes("video") ? (
+              <div className="h-[20rem] w-[20rem]  relative">
+                <video controls className="relative ">
+                  <source src={`${nextUrl}/${value}`} />
+                  Your browser does not support the video element.
+                </video>
+                <XCircle
+                  className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0"
+                  // onClick={() => handleRemoveVideo(video)}
+                />
+              </div>
+            ) : null)}
         </div>
       )}
     </>

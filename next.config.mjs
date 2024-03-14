@@ -5,6 +5,9 @@ const nextConfig = {
       bodySizeLimit: "5mb",
     },
   },
+  images: {
+    domains: ["localhost"],
+  },
 };
 
 export default nextConfig;

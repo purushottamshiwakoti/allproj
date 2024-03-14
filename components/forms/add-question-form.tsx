@@ -122,6 +122,8 @@ export const AddQuestionForm = ({
       addQuestion(values, params.id as string).then((data) => {
         if (data?.succcess) {
           toast.success(data.succcess);
+          router.refresh();
+          router.push(`/${params.id}/questions`);
         }
 
         if (data?.error) {

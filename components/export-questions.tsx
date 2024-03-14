@@ -11,7 +11,7 @@ export const ExportQuestions = () => {
   function exportToCSV() {
     startTransistion(async () => {
       const files = await downloadQuestions(params.id);
-
+      console.log(files);
       const blob = new Blob([files], { type: "text/csv" });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");

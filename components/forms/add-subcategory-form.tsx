@@ -71,7 +71,7 @@ export const AddSubCategoryForm = ({ data }: { data: Category[] }) => {
           name="categoryId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Select</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
