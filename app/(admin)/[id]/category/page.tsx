@@ -32,7 +32,7 @@ const CategoryPage = async ({ params }: { params: any }) => {
     <div>
       <AddCategoryDialog />
       <div>
-        <DataTable columns={columns} data={data} />
+        <DataTable columns={columns} data={data} searchKey="name" />
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ import { Upload } from "lucide-react";
 import Link from "next/link";
 import { ExportQuestions } from "@/components/export-questions";
 
- async function getData(projectId: string) {
+async function getData(projectId: string) {
   const question = await db.question.findMany({
     where: {
       projectId,
@@ -66,7 +66,11 @@ const QuestionsPage = async ({ params }: { params: any }) => {
       </div>
 
       <div className="mt-3">
-        <DataTable columns={columns} data={refactoredData} />
+        <DataTable
+          columns={columns}
+          data={refactoredData}
+          searchKey="question"
+        />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import db from "@/lib/db";
 import React from "react";
 import { columns } from "./colums";
 
- async function getData(id: string) {
+async function getData(id: string) {
   const typeOfQuestion = await db.typeOfQuestion.findMany({
     where: {
       projectId: id,
@@ -26,7 +26,7 @@ const QuestionTypePage = async ({ params }: { params: any }) => {
       <div>
         <AddQuestionTypeDialog />
         <div className="mt-5">
-          <DataTable columns={columns} data={data} />
+          <DataTable columns={columns} data={data} searchKey="name" />
         </div>
       </div>
     </>

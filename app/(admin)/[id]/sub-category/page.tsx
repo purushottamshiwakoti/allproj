@@ -50,7 +50,7 @@ const SubCategoryPage = async ({ params }: { params: any }) => {
       <AddSubCategoryDialog data={data} />
 
       <div>
-        <DataTable columns={columns} data={subCategoryData} />
+        <DataTable columns={columns} data={subCategoryData} searchKey="name" />
       </div>
     </div>
   );

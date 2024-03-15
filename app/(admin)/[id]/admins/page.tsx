@@ -32,7 +32,7 @@ const AdminsPage = async ({ params }: { params: any }) => {
         <AddButton href={`/${id}/admins/add`} />
       </div>
       <div className="mt-5">
-        <DataTable columns={columns} data={data} />
+        <DataTable columns={columns} data={data} searchKey=" " />
       </div>
     </div>
   );

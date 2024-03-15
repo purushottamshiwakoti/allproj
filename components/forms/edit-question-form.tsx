@@ -170,9 +170,9 @@ export const EditQuestionForm = ({
           }
           if (data?.success) {
             toast.success(data.success);
-            router.refresh();
 
             router.push(`/${params.id}/questions`);
+            router.refresh();
           }
         });
       });
