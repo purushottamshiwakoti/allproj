@@ -20,7 +20,7 @@ const AdminsPage = async () => {
     <div>
       <AddButton href="/admins/add" />
       <div className="mt-5">
-        <DataTable columns={columns} data={data} />
+        <DataTable columns={columns} data={data} searchKey="name" />
       </div>
     </div>
   );

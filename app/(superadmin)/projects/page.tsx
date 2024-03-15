@@ -20,7 +20,7 @@ const ProjectsPage = async () => {
     <div>
       <AddProjectDialog />
       <div className="mt-5">
-        <DataTable columns={columns} data={data} />
+        <DataTable columns={columns} data={data} searchKey="name" />
       </div>
     </div>
   );
