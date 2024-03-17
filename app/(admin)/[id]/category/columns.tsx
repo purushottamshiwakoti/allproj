@@ -23,11 +23,16 @@ export type Category = {
   id: string;
   name: string;
   subcategories: string[];
+  sn: number;
 };
 
 // Import statements...
 
 export const columns: ColumnDef<Category>[] = [
+  {
+    accessorKey: "sn",
+    header: "S.N",
+  },
   {
     accessorKey: "name",
     header: ({ column }) => {

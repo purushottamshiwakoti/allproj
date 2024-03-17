@@ -4,9 +4,20 @@ import { columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import db from "@/lib/db";
 import { Button } from "@/components/ui/button";
+import Search from "@/components/search";
 
-async function getData() {
+async function getData(name: string, email: string) {
   const admins = await db.user.findMany({
+    where: {
+      fullName: {
+        startsWith: name,
+        mode: "insensitive",
+      },
+      email: {
+        startsWith: email,
+        mode: "insensitive",
+      },
+    },
     include: {
       projects: true,
     },
@@ -18,13 +29,28 @@ async function getData() {
   return admins;
 }
 
-const AdminsPage = async ({ params }: { params: any }) => {
+const AdminsPage = async ({
+  params,
+  searchParams,
+}: {
+  params: any;
+  searchParams: any;
+}) => {
+  const name = searchParams.name;
+  const email = searchParams.email;
   const id = params.id;
-  const adminsData = await getData();
+  const adminsData = await getData(name, email);
 
-  const data = adminsData.filter((item) =>
+  const filteredData = adminsData.filter((item) =>
     item.projects?.find((i) => i.id == id)
   );
+  const data = filteredData.map((item, index) => ({
+    sn: index + 1,
+    id: item.id,
+    fullName: item.fullName,
+    email: item.email,
+    role: item.role,
+  }));
 
   return (
     <div>
@@ -32,7 +58,11 @@ const AdminsPage = async ({ params }: { params: any }) => {
         <AddButton href={`/${id}/admins/add`} />
       </div>
       <div className="mt-5">
-        <DataTable columns={columns} data={data} searchKey=" " />
+        <div className="grid grid-cols-3">
+          <Search searchKey={"name"} searchParams={searchParams} />
+          <Search searchKey={"email"} searchParams={searchParams} />
+        </div>
+        <DataTable columns={columns} data={data} />
       </div>
     </div>
   );

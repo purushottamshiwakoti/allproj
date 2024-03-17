@@ -44,6 +44,7 @@ model Project {
   questions       Question[]
   userIds         String[]         @db.ObjectId
   typeofQuestions TypeOfQuestion[]
+  Token           Token[]
 }
 
 model Folder {
@@ -80,31 +81,28 @@ model Files {
 }
 
 model Question {
-  id             String  @id @default(auto()) @map("_id") @db.ObjectId
-  question       String?
-  questionImage  String?
-  questionAudio  String?
-  questionVideo  String?
-  option         String?
-  optionCorrect  Boolean @default(false)
-  optionImage    String?
-  optionAudio    String?
-  optionVideo    String?
-  option1        String?
-  option1Correct Boolean @default(false)
-  option1Image   String?
-  option1Audio   String?
-  option1Video   String?
-  option2        String?
-  option2Correct Boolean @default(false)
-  option2Image   String?
-  option2Audio   String?
-  option2Video   String?
-  option3        String?
-  option3Correct Boolean @default(false)
-  option3Image   String?
-  option3Audio   String?
-  option3Video   String?
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  question      String?
+  questionImage String?
+  questionAudio String?
+  questionVideo String?
+  option        String?
+  correctOption String
+  optionImage   String?
+  optionAudio   String?
+  optionVideo   String?
+  option1       String?
+  option1Image  String?
+  option1Audio  String?
+  option1Video  String?
+  option2       String?
+  option2Image  String?
+  option2Audio  String?
+  option2Video  String?
+  option3       String?
+  option3Image  String?
+  option3Audio  String?
+  option3Video  String?
 
   created_at       DateTime        @default(now())
   updated_at       DateTime        @updatedAt
@@ -150,4 +148,13 @@ model TypeOfQuestion {
   updated_at DateTime   @updatedAt
   Project    Project?   @relation(fields: [projectId], references: [id])
   projectId  String?    @db.ObjectId
+}
+
+model Token {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  token      String   @unique
+  Project    Project? @relation(fields: [projectId], references: [id])
+  projectId  String?  @db.ObjectId
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }

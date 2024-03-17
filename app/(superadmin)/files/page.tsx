@@ -31,7 +31,7 @@ const FilesPage = async ({ searchParams }: { searchParams: any }) => {
     <>
       <div>
         <h2 className="capitalize text-primary font-medium text-2xl">
-          mY FILES
+          Project Files
         </h2>
         <div className="mt-4 grid grid-cols-4 gap-10">
           {folders.map((item) => (

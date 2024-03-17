@@ -23,9 +23,14 @@ export type Category = {
   category: string | undefined;
   subCategory: string | undefined;
   typeOfQuestion: string | undefined;
+  sn: number;
 };
 
 export const columns: ColumnDef<Category>[] = [
+  {
+    accessorKey: "sn",
+    header: "S.N",
+  },
   {
     accessorKey: "question",
     header: ({ column }) => {

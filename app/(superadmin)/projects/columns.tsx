@@ -18,9 +18,14 @@ import {
 export type Users = {
   id: string;
   name: string;
+  sn: number;
 };
 
 export const columns: ColumnDef<Users>[] = [
+  {
+    accessorKey: "sn",
+    header: "S.N",
+  },
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -36,29 +41,29 @@ export const columns: ColumnDef<Users>[] = [
     },
   },
 
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      const project = row.original;
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => {
+  //     const project = row.original;
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(project.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
+  //     return (
+  //       <DropdownMenu>
+  //         <DropdownMenuTrigger asChild>
+  //           <Button variant="ghost" className="h-8 w-8 p-0">
+  //             <span className="sr-only">Open menu</span>
+  //             <MoreHorizontal className="h-4 w-4" />
+  //           </Button>
+  //         </DropdownMenuTrigger>
+  //         <DropdownMenuContent align="end">
+  //           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+  //           <DropdownMenuItem
+  //             onClick={() => navigator.clipboard.writeText(project.id)}
+  //           >
+  //             Copy payment ID
+  //           </DropdownMenuItem>
+  //         </DropdownMenuContent>
+  //       </DropdownMenu>
+  //     );
+  //   },
+  // },
 ];

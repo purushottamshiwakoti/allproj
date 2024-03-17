@@ -90,28 +90,25 @@ export const AddQuestionForm = ({
       questionAudio: "",
       questionVideo: "",
       option: "",
-      optionCorrect: false,
       optionImage: "",
       optionAudio: "",
       optionVideo: "",
       option1: "",
-      option1Correct: false,
       option1Image: "",
       option1Audio: "",
       option1Video: "",
       option2: "",
-      option2Correct: false,
       option2Image: "",
       option2Audio: "",
       option2Video: "",
       option3: "",
-      option3Correct: false,
       option3Image: "",
       option3Audio: "",
       option3Video: "",
       categoryId: "",
       subCategoryId: "",
       typeOfQuestionId: "",
+      correctOption: "",
       projectId: "",
     },
   });
@@ -122,12 +119,12 @@ export const AddQuestionForm = ({
       addQuestion(values, params.id as string).then((data) => {
         if (data?.succcess) {
           toast.success(data.succcess);
-          router.refresh();
           router.push(`/${params.id}/questions`);
+          router.refresh();
         }
 
         if (data?.error) {
-          toast.success(data.error);
+          toast.error(data.error);
         }
       });
     });
@@ -305,15 +302,17 @@ export const AddQuestionForm = ({
                   {/* is correct  */}
                   <FormField
                     control={form.control}
-                    name="optionCorrect"
+                    name="correctOption"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="mr-2 ">Correct</FormLabel>
                         <FormControl>
-                          <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                            disabled={isPending}
+                          <input
+                            type="radio"
+                            name="optionCorrect"
+                            className="mr-2 cursor-pointer"
+                            checked={field.value == "option"}
+                            onClick={() => field.onChange("option")}
                           />
                         </FormControl>
 
@@ -421,15 +420,17 @@ export const AddQuestionForm = ({
                 <div className="">
                   <FormField
                     control={form.control}
-                    name="option1Correct"
+                    name="correctOption"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="mr-2">Correct</FormLabel>
+                        <FormLabel className="mr-2 ">Correct</FormLabel>
                         <FormControl>
-                          <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                            disabled={isPending}
+                          <input
+                            type="radio"
+                            name="optionCorrect"
+                            className="mr-2 cursor-pointer"
+                            checked={field.value == "option1"}
+                            onClick={() => field.onChange("option1")}
                           />
                         </FormControl>
 
@@ -538,15 +539,17 @@ export const AddQuestionForm = ({
                     <div className=" ">
                       <FormField
                         control={form.control}
-                        name="option2Correct"
+                        name="correctOption"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="mr-2">Correct</FormLabel>
+                            <FormLabel className="mr-2 ">Correct</FormLabel>
                             <FormControl>
-                              <Checkbox
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                                disabled={isPending}
+                              <input
+                                type="radio"
+                                name="optionCorrect"
+                                className="mr-2 cursor-pointer"
+                                checked={field.value == "option2"}
+                                onClick={() => field.onChange("option2")}
                               />
                             </FormControl>
 
@@ -655,15 +658,17 @@ export const AddQuestionForm = ({
                     <div className=" ">
                       <FormField
                         control={form.control}
-                        name="option3Correct"
+                        name="correctOption"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="mr-2">Correct</FormLabel>
+                            <FormLabel className="mr-2 ">Correct</FormLabel>
                             <FormControl>
-                              <Checkbox
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                                disabled={isPending}
+                              <input
+                                type="radio"
+                                name="optionCorrect"
+                                className="mr-2 cursor-pointer"
+                                checked={field.value == "option3"}
+                                onClick={() => field.onChange("option3")}
                               />
                             </FormControl>
 

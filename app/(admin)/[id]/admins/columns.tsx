@@ -20,9 +20,14 @@ export type Users = {
   fullName: string;
   email: string;
   role: string;
+  sn: number;
 };
 
 export const columns: ColumnDef<Users>[] = [
+  {
+    accessorKey: "sn",
+    header: "S.N",
+  },
   {
     accessorKey: "fullName",
     header: "Full Name",

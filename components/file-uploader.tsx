@@ -3,7 +3,7 @@
 import { LoaderIcon, Plus, XCircle } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 
@@ -18,7 +18,8 @@ export const FileUploader = ({
   value: string;
   onChange: (src: string) => void;
 }) => {
-  const [removedValue, setRemovedValue] = useState(false);
+  const [removedValue, setRemovedValue] = useState(true);
+
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<{ url: string; type: string } | null>(null);
   const params = useParams();
@@ -38,6 +39,12 @@ export const FileUploader = ({
   const audioType = {
     "audio/mp3": [".mp3"],
   };
+
+  useEffect(() => {
+    if (value) {
+      setRemovedValue(false);
+    }
+  }, []);
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
@@ -131,14 +138,17 @@ export const FileUploader = ({
               </div>
             ) : file.type.includes("audio") ? (
               <div className=" ">
-                <audio controls className="relative ">
-                  <source src={file.url} />
+                <audio controls className="relative -ml-4 ">
+                  <source src={file.url} className="" />
                   Your browser does not support the audio element.
                 </audio>
-                <XCircle className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0" />
+                <XCircle
+                  className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0"
+                  onClick={() => handleRemoveFile()}
+                />
               </div>
             ) : file.type.includes("video") ? (
-              <div className="h-[20rem] w-[20rem]  relative">
+              <div className="h-[20rem] w-[17rem]  relative">
                 <video controls className="relative ">
                   <source src={file.url} />
                   Your browser does not support the video element.
@@ -168,14 +178,14 @@ export const FileUploader = ({
               </div>
             ) : type.includes("audio") ? (
               <div className=" ">
-                <audio controls className="relative ">
+                <audio controls className="relative -ml-4 ">
                   <source src={`${nextUrl}/${value}`} />
                   Your browser does not support the audio element.
                 </audio>
                 <XCircle className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0" />
               </div>
             ) : type.includes("video") ? (
-              <div className="h-[20rem] w-[20rem]  relative">
+              <div className="h-[20rem] w-[17rem]  relative">
                 <video controls className="relative ">
                   <source src={`${nextUrl}/${value}`} />
                   Your browser does not support the video element.

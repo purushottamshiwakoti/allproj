@@ -8,10 +8,14 @@ import { Upload } from "lucide-react";
 import Link from "next/link";
 import { ExportQuestions } from "@/components/export-questions";
 
-async function getData(projectId: string) {
+async function getData(projectId: string, name: string) {
   const question = await db.question.findMany({
     where: {
       projectId,
+      question: {
+        startsWith: name,
+        mode: "insensitive",
+      },
     },
 
     orderBy: {
@@ -28,10 +32,18 @@ async function getData(projectId: string) {
   return question;
 }
 
-const QuestionsPage = async ({ params }: { params: any }) => {
+const QuestionsPage = async ({
+  params,
+  searchParams,
+}: {
+  params: any;
+  searchParams: any;
+}) => {
+  const question = searchParams.question;
   const projectId = params.id;
-  const data = await getData(projectId);
-  const refactoredData = data.map((item) => ({
+  const data = await getData(projectId, question);
+  const refactoredData = data.map((item, index) => ({
+    sn: index + 1,
     id: item.id,
     question:
       item.question !== null
@@ -59,6 +71,12 @@ const QuestionsPage = async ({ params }: { params: any }) => {
               Upload Bulk Questions
             </Link>
           </Button>
+          <Button variant={"outline"} className="flex items-center" asChild>
+            <Link href={"questions/edit"}>
+              <Upload className="w-4 h-4 mr-3" />
+              Edit Bulk Questions
+            </Link>
+          </Button>
         </div>
         <div>
           <ExportQuestions />
@@ -66,11 +84,7 @@ const QuestionsPage = async ({ params }: { params: any }) => {
       </div>
 
       <div className="mt-3">
-        <DataTable
-          columns={columns}
-          data={refactoredData}
-          searchKey="question"
-        />
+        <DataTable columns={columns} data={refactoredData} />
       </div>
     </div>
   );

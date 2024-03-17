@@ -5,8 +5,9 @@ import React from "react";
 import { columns } from "./columns";
 
 import _ from "lodash";
+import Search from "@/components/search";
 
-async function getData(id: string) {
+async function getData(id: string, name: string) {
   // Fetch categories based on projectId
   const categories = await db.category.findMany({
     where: {
@@ -19,6 +20,10 @@ async function getData(id: string) {
     const subcategory = await db.subCategory.findMany({
       where: {
         categoryId: category.id,
+        name: {
+          startsWith: name,
+          mode: "insensitive",
+        },
       },
     });
     return subcategory;
@@ -34,11 +39,20 @@ async function getData(id: string) {
   return categoriesWithSubcategories;
 }
 
-const SubCategoryPage = async ({ params }: { params: any }) => {
+const SubCategoryPage = async ({
+  params,
+  searchParams,
+}: {
+  params: any;
+  searchParams: any;
+}) => {
   const id = params.id;
-  const data = await getData(id);
-  const subCategoryData = data.flatMap((item) =>
+  const name = searchParams.name;
+  console.log(name);
+  const data = await getData(id, name);
+  const subCategoryData = data.flatMap((item, index) =>
     item.subcategories.map((sub) => ({
+      sn: index + 1,
       id: sub.id,
       name: sub.name,
       categoryName: item.name,
@@ -50,7 +64,10 @@ const SubCategoryPage = async ({ params }: { params: any }) => {
       <AddSubCategoryDialog data={data} />
 
       <div>
-        <DataTable columns={columns} data={subCategoryData} searchKey="name" />
+        <div className="grid grid-cols-3 mt-3">
+          <Search searchKey={"name"} searchParams={searchParams} />
+        </div>
+        <DataTable columns={columns} data={subCategoryData} />
       </div>
     </div>
   );

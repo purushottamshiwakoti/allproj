@@ -18,6 +18,8 @@ import { date } from "zod";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Question } from "@prisma/client";
+import Link from "next/link";
+import { FileDown } from "lucide-react";
 
 interface DataProps {
   SN: string | null;
@@ -29,22 +31,20 @@ interface DataProps {
   questionAudio: string | null;
   questionVideo: string | null;
   option: string | null;
-  optionCorrect: string | null;
+  correctOption: string;
   optionImage: string | null;
   optionAudio: string | null;
   optionVideo: string | null;
   option1: string | null;
-  option1Correct: string | null;
+
   option1Image: string | null;
   option1Audio: string | null;
   option1Video: string | null;
   option2: string | null;
-  option2Correct: string | null;
   option2Image: string | null;
   option2Audio: string | null;
   option2Video: string | null;
   option3: string | null;
-  option3Correct: string | null;
   option3Image: string | null;
   option3Audio: string | null;
   option3Video: string | null;
@@ -92,21 +92,10 @@ export const BulkUpload = () => {
     csvData!.forEach((item) => {
       // Construct values object for each item
       const values = {
-        optionCorrect:
-          item.optionCorrect !== null &&
-          item.optionCorrect.toLowerCase() === "true",
-        option1Correct:
-          item.option1Correct !== null &&
-          item.option1Correct.toLowerCase() === "true",
-        option2Correct:
-          item.option2Correct !== null &&
-          item.option2Correct.toLowerCase() === "true",
-        option3Correct:
-          item.option3Correct !== null &&
-          item.option3Correct.toLowerCase() === "true",
         typeOfQuestionId: item.typeOfQuestionId || "",
         categoryId: item.categoryId || "",
         subCategoryId: item.subCategoryId || "",
+        correctOption: item.correctOption,
         question: item.question || "",
         questionImage: item.questionImage || "",
         questionAudio: item.questionAudio || "",
@@ -151,6 +140,14 @@ export const BulkUpload = () => {
       {!csvData && (
         <div>
           <Input type="file" accept=".csv" onChange={handleFileChange} />
+          <div className="mt-4 ">
+            <a
+              href="/qsfile.csv"
+              className="download flex items-center space-x-4 p-2 border-2 border-dashed"
+            >
+              <FileDown /> Download Sample File
+            </a>
+          </div>
         </div>
       )}
       <div>
@@ -170,6 +167,7 @@ export const BulkUpload = () => {
                     <TableHead>typeOfQuestionId</TableHead>
                     <TableHead>categoryId</TableHead>
                     <TableHead>subCategoryId</TableHead>
+                    <TableHead>correctOption</TableHead>
                     <TableHead>question</TableHead>
                     <TableHead>questionImage</TableHead>
                     <TableHead>questionAudio</TableHead>
@@ -214,6 +212,9 @@ export const BulkUpload = () => {
                             {item.subCategoryId}
                           </TableCell>
                           <TableCell className="font-medium">
+                            {item.correctOption}
+                          </TableCell>
+                          <TableCell className="font-medium">
                             {item.question}
                           </TableCell>
                           <TableCell className="font-medium">
@@ -228,9 +229,7 @@ export const BulkUpload = () => {
                           <TableCell className="font-medium">
                             {item.option}
                           </TableCell>
-                          <TableCell className="font-medium">
-                            {item.optionCorrect}
-                          </TableCell>
+
                           <TableCell className="font-medium">
                             {item.optionImage}
                           </TableCell>
@@ -243,9 +242,7 @@ export const BulkUpload = () => {
                           <TableCell className="font-medium">
                             {item.option1}
                           </TableCell>
-                          <TableCell className="font-medium">
-                            {item.option1Correct}
-                          </TableCell>
+
                           <TableCell className="font-medium">
                             {item.option1Image}
                           </TableCell>
@@ -258,9 +255,7 @@ export const BulkUpload = () => {
                           <TableCell className="font-medium">
                             {item.option2}
                           </TableCell>
-                          <TableCell className="font-medium">
-                            {item.option2Correct}
-                          </TableCell>
+
                           <TableCell className="font-medium">
                             {item.option2Image}
                           </TableCell>
@@ -273,9 +268,7 @@ export const BulkUpload = () => {
                           <TableCell className="font-medium">
                             {item.option3}
                           </TableCell>
-                          <TableCell className="font-medium">
-                            {item.option3Correct}
-                          </TableCell>
+
                           <TableCell className="font-medium">
                             {item.option3Image}
                           </TableCell>

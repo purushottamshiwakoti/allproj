@@ -22,9 +22,14 @@ import Link from "next/link";
 export type Category = {
   id: string;
   name: string;
+  sn: number;
 };
 
 export const columns: ColumnDef<Category>[] = [
+  {
+    accessorKey: "sn",
+    header: "S.N",
+  },
   {
     accessorKey: "name",
     header: ({ column }) => {

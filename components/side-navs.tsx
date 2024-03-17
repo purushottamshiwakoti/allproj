@@ -42,6 +42,15 @@ export const SideNavs = () => {
             </Button>
           </div>
         ))}
+        {params.id && (
+          <Button
+            className="w-full flex justify-start text-white"
+            variant={path.includes("token") ? "default" : "link"}
+            asChild
+          >
+            <Link href={`/${params.id}/token`}>Token</Link>
+          </Button>
+        )}
       </div>
     </>
   );

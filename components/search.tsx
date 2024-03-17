@@ -1,58 +1,91 @@
+// Import statements at the top
+
 "use client";
-
-import React, { useState } from "react";
-
-import { X } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Input } from "./ui/input";
+import { X } from "lucide-react";
+import { useState } from "react";
 
-const Search = ({ searchKey }: { searchKey: string }) => {
+// Define the Search component
+const Search = ({
+  searchKey,
+  searchParams,
+}: {
+  searchKey: string;
+  searchParams: any;
+}) => {
+  // Hooks
   const router = useRouter();
-  const searchParams = useSearchParams();
   const path = usePathname();
-  const [s, setS] = useState<any>(searchParams.get("s"));
+  const [inputValue, setInputValue] = useState("");
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    router.push(`${path}?s=${s}`);
+  // Debounce function
+  const debounce = (func: Function, delay: number) => {
+    let timeoutId: NodeJS.Timeout;
+    return function (this: any, ...args: any[]) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func.apply(this, args), delay);
+    };
   };
-  const clearSearch = (e: any) => {
-    e.preventDefault();
-    console.log(s);
-    router.push(`${path}`);
+
+  // Handle change function
+  const handleChange = debounce((e: string) => {
+    setInputValue(e);
+    updateSearchParams(e);
+  }, 300); // 300 milliseconds debounce time
+
+  // Function to update search parameters
+  const updateSearchParams = (value: string) => {
+    // Update search parameters
+    const updatedSearchParams = {
+      ...searchParams,
+      [searchKey.toLowerCase()]: value.toLowerCase(),
+    };
+
+    // Construct query string
+    const queryString = Object.entries(updatedSearchParams)
+      .map(
+        ([key, value]) =>
+          `${encodeURIComponent(key)}=${encodeURIComponent(value as string)}`
+      )
+      .join("&");
+
+    // Push the updated query string to the router
+    router.push(`${path}?${queryString}`);
   };
+
+  // Function to clear input and update search parameters
+  const handleClear = () => {
+    setInputValue("");
+    updateSearchParams(""); // Clear the search key value
+  };
+
   return (
-    <>
-      <div>
-        <form action="" onSubmit={(e: any) => handleSubmit(e)}>
-          <div className="relative">
-            <Input
-              placeholder={`Filter ${searchKey}...`}
-              className="lg:w-[25rem] w-auto cap "
-              value={s}
-              onChange={(e) => {
-                e.target.value.length > 0
-                  ? setS(e.target.value)
-                  : clearSearch(e),
-                  setS(e.target.value);
-              }}
+    <div>
+      <form action="">
+        <div className="relative">
+          {/* Input component */}
+          <Input
+            placeholder={`Filter ${searchKey}...`}
+            value={inputValue}
+            className="lg:w-[25rem] w-auto capitalize"
+            onChange={(e) => handleChange(e.target.value)}
+          />
+          {/* Clear button */}
+          {inputValue && inputValue.length > 0 && (
+            <X
+              className="absolute right-7 top-2 w-5 h-5 text-zinc-600 cursor-pointer"
+              onClick={handleClear}
             />
-            {s && s.length > 0 ? (
-              <X
-                className="absolute right-0 top-2 mr-2 w-5 h-5 text-zinc-600 cursor-pointer"
-                onClick={(e: any) => {
-                  setS(""), clearSearch(e);
-                }}
-              />
-            ) : null}
-          </div>
-          <button type="submit" className="hidden">
-            yes
-          </button>
-        </form>
-      </div>
-    </>
+          )}
+        </div>
+        {/* Hidden submit button */}
+        <button type="submit" className="hidden">
+          Submit
+        </button>
+      </form>
+    </div>
   );
 };
 
-export default Search;
+export default Search; // Export the Search component

@@ -1,6 +1,9 @@
 import { AddFiles } from "@/components/add-files";
 import { BackButton } from "@/components/back-button";
+import { Button } from "@/components/ui/button";
+import { ViewFiles } from "@/components/view-files";
 import db from "@/lib/db";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 async function getData(id: string, pg: number) {
@@ -51,11 +54,17 @@ const FolderPage = async ({
   return (
     <div>
       <BackButton href={`/${id}/files`} />
-      <h2 className="capitalize text-primary font-medium text-2xl mt-5">
-        {folders?.name}
-      </h2>
+      <div className="flex items-center justify-between mb-3 ">
+        <h2 className="capitalize text-primary font-medium text-2xl mt-5">
+          Folder Name= {folders?.name}
+        </h2>
+        <Button variant={"outline"}>
+          <Link href={`/${id}/files/${folderId}/upload`}>Upload Files</Link>
+        </Button>
+      </div>
       <div className="mt-5">
-        <AddFiles filesData={files} totalCount={totalCount} />
+        <ViewFiles filesData={files} totalCount={totalCount} />
+        {/* <AddFiles filesData={files} totalCount={totalCount} /> */}
       </div>
     </div>
   );

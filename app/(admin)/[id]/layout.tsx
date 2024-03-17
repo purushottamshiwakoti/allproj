@@ -34,7 +34,7 @@ const ProjectLayout = async ({
   }
 
   const ids = data.userIds;
-  if (!ids.includes(user?.id!)) {
+  if (!ids.includes(user?.id!) && user?.role !== "SUPERADMIN") {
     return notFound();
   }
   return (
