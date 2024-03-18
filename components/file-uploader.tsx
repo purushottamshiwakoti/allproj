@@ -166,8 +166,8 @@ export const FileUploader = ({
               <div>
                 <Image
                   // src={`/${value}`}
-                  src={`${nextUrl}/${value}`}
-                  alt={`${value}`}
+                  src={`${nextUrl}\\${value}`}
+                  alt={`/${value}`}
                   fill
                   className=" rounded-md"
                 />

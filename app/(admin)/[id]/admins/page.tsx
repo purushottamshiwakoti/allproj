@@ -58,7 +58,7 @@ const AdminsPage = async ({
         <AddButton href={`/${id}/admins/add`} />
       </div>
       <div className="mt-5">
-        <div className="grid grid-cols-3">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-2">
           <Search searchKey={"name"} searchParams={searchParams} />
           <Search searchKey={"email"} searchParams={searchParams} />
         </div>
