@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
 import Link from "next/link";
 import { ExportQuestions } from "@/components/export-questions";
+import Search from "@/components/search";
 
 async function getData(projectId: string, name: string) {
   const question = await db.question.findMany({
@@ -45,19 +46,12 @@ const QuestionsPage = async ({
   const refactoredData = data.map((item, index) => ({
     sn: index + 1,
     id: item.id,
-    question:
-      item.question !== null
-        ? item.question
-        : item.questionAudio !== null
-        ? item.questionAudio
-        : item.questionVideo !== null
-        ? item.questionVideo
-        : item.questionImage
-        ? item.questionImage
-        : null,
-    category: item.category?.name,
-    subCategory: item.subCategory?.name,
-    typeOfQuestion: item.TypeOfQuestion?.name,
+    question: item.question,
+    option1: item.option,
+    option2: item.option1,
+    option3: item.option2,
+    option4: item.option3,
+    correctOption: item.correctOption,
   }));
 
   return (
@@ -71,18 +65,20 @@ const QuestionsPage = async ({
               Upload Bulk Questions
             </Link>
           </Button>
-          <Button variant={"outline"} className="flex items-center" asChild>
+          {/* <Button variant={"outline"} className="flex items-center" asChild>
             <Link href={"questions/edit"}>
               <Upload className="w-4 h-4 mr-3" />
               Edit Bulk Questions
             </Link>
-          </Button>
+          </Button> */}
         </div>
         <div>
           <ExportQuestions />
         </div>
       </div>
-
+      <div className="mt-2">
+        <Search searchKey="question" searchParams={searchParams} />
+      </div>
       <div className="mt-3">
         <DataTable columns={columns} data={refactoredData} />
       </div>

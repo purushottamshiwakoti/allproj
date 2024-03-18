@@ -193,11 +193,11 @@ export const AddQuestionForm = ({
             method="post"
             encType="multipart/form-data"
           >
-            <div className="grid grid-cols-2 gap-10">
+            <div>
               {/* add questions start  */}
               <div>
                 {/* question start  */}
-                <div>
+                <div className="space-y-3">
                   {questionType == "text" && (
                     <FormField
                       control={form.control}
@@ -209,7 +209,7 @@ export const AddQuestionForm = ({
                             <Textarea
                               placeholder="Enter text question here"
                               {...field}
-                              rows={10}
+                              rows={1}
                               disabled={isPending}
                             />
                           </FormControl>
@@ -298,128 +298,131 @@ export const AddQuestionForm = ({
                 {/* question end  */}
 
                 {/* option1 start  */}
-                <div>
+                <div className="space-y-3">
                   {/* is correct  */}
 
                   {/* is corret ends  */}
-                  {questionType == "text" && (
-                    <FormField
-                      control={form.control}
-                      name="option"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Option1</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="Enter text option1 here"
-                              {...field}
-                              rows={10}
-                              disabled={isPending}
-                            />
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-
-                  {questionType == "image" && (
-                    <FormField
-                      control={form.control}
-                      name="optionImage"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Option1 Image</FormLabel>
-                          <FormControl>
-                            <div>
-                              <FileUploader
-                                name="Add Image"
-                                type="image"
-                                value={field.value}
-                                onChange={(value) => field.onChange(value)}
+                  <div>
+                    {questionType == "text" && (
+                      <FormField
+                        control={form.control}
+                        name="option"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Option1</FormLabel>
+                            <FormControl>
+                              <Textarea
+                                placeholder="Enter text option1 here"
+                                {...field}
+                                rows={1}
+                                disabled={isPending}
                               />
-                            </div>
-                          </FormControl>
+                            </FormControl>
 
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-                  {questionType == "audio" && (
-                    <FormField
-                      control={form.control}
-                      name="optionAudio"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Option1 Audio</FormLabel>
-                          <FormControl>
-                            <div>
-                              <FileUploader
-                                name="Add Audio"
-                                type="audio"
-                                value={field.value}
-                                onChange={(value) => field.onChange(value)}
-                              />
-                            </div>
-                          </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
 
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-                  {questionType == "video" && (
-                    <FormField
-                      control={form.control}
-                      name="optionVideo"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Option1 Video</FormLabel>
-                          <FormControl>
-                            <div>
-                              <FileUploader
-                                name="Add Video"
-                                type="video"
-                                value={field.value}
-                                onChange={(value) => field.onChange(value)}
-                              />
-                            </div>
-                          </FormControl>
+                    {questionType == "image" && (
+                      <FormField
+                        control={form.control}
+                        name="optionImage"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Option1 Image</FormLabel>
+                            <FormControl>
+                              <div>
+                                <FileUploader
+                                  name="Add Image"
+                                  type="image"
+                                  value={field.value}
+                                  onChange={(value) => field.onChange(value)}
+                                />
+                              </div>
+                            </FormControl>
 
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
+                    {questionType == "audio" && (
+                      <FormField
+                        control={form.control}
+                        name="optionAudio"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Option1 Audio</FormLabel>
+                            <FormControl>
+                              <div>
+                                <FileUploader
+                                  name="Add Audio"
+                                  type="audio"
+                                  value={field.value}
+                                  onChange={(value) => field.onChange(value)}
+                                />
+                              </div>
+                            </FormControl>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
+                    {questionType == "video" && (
+                      <FormField
+                        control={form.control}
+                        name="optionVideo"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Option1 Video</FormLabel>
+                            <FormControl>
+                              <div>
+                                <FileUploader
+                                  name="Add Video"
+                                  type="video"
+                                  value={field.value}
+                                  onChange={(value) => field.onChange(value)}
+                                />
+                              </div>
+                            </FormControl>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
+                  </div>
+
+                  <FormField
+                    control={form.control}
+                    name="correctOption"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="mr-2 ">Correct</FormLabel>
+                        <FormControl>
+                          <input
+                            type="radio"
+                            name="optionCorrect"
+                            className="mr-2 cursor-pointer"
+                            checked={field.value == "option"}
+                            onClick={() => field.onChange("option")}
+                          />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-                <FormField
-                  control={form.control}
-                  name="correctOption"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="mr-2 ">Correct</FormLabel>
-                      <FormControl>
-                        <input
-                          type="radio"
-                          name="optionCorrect"
-                          className="mr-2 cursor-pointer"
-                          checked={field.value == "option"}
-                          onClick={() => field.onChange("option")}
-                        />
-                      </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
 
                 {/* option1 end */}
 
                 {/* option2 srart  */}
 
-                <div className="">
+                <div className=" space-y-2 mt-2">
                   <div className="relative">
                     {questionType == "text" && (
                       <FormField
@@ -432,7 +435,7 @@ export const AddQuestionForm = ({
                               <Textarea
                                 placeholder="Enter text option2 here"
                                 {...field}
-                                rows={10}
+                                rows={1}
                                 disabled={isPending}
                               />
                             </FormControl>
@@ -536,7 +539,7 @@ export const AddQuestionForm = ({
                 {/* option 2 end  */}
 
                 {/* option 3 start  */}
-                <div className="">
+                <div className=" space-y-2">
                   <div className="relative">
                     <div className=" "></div>
                     {questionType == "text" && (
@@ -550,7 +553,7 @@ export const AddQuestionForm = ({
                               <Textarea
                                 placeholder="Enter text option3 here"
                                 {...field}
-                                rows={10}
+                                rows={1}
                                 disabled={isPending}
                               />
                             </FormControl>
@@ -654,7 +657,7 @@ export const AddQuestionForm = ({
                 {/* option 3 end */}
 
                 {/* option 4 start  */}
-                <div className="">
+                <div className=" space-y-2 mt-2">
                   <div className="relative">
                     <div className=" "></div>
                     {questionType == "text" && (
@@ -668,7 +671,7 @@ export const AddQuestionForm = ({
                               <Textarea
                                 placeholder="Enter text option4 here"
                                 {...field}
-                                rows={10}
+                                rows={1}
                                 disabled={isPending}
                               />
                             </FormControl>
@@ -773,7 +776,8 @@ export const AddQuestionForm = ({
               </div>
               {/* add questions end  */}
               {/* categories start */}
-              <div className="space-y-5">
+
+              <div className="grid grid-cols-3 gap-x-3 mt-2">
                 <FormField
                   control={form.control}
                   name="typeOfQuestionId"
@@ -874,6 +878,7 @@ export const AddQuestionForm = ({
                   )}
                 />
               </div>
+
               {/* categories end*/}
             </div>
 

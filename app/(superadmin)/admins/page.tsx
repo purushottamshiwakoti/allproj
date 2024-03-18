@@ -51,6 +51,9 @@ const AdminsPage = async ({ searchParams }: { searchParams: any }) => {
           <Search searchKey={"name"} searchParams={searchParams} />
           <Search searchKey={"email"} searchParams={searchParams} />
         </div>
+        <div className="mt-3">
+          <AddButton href={`/admins/add`} />
+        </div>
         <DataTable columns={columns} data={data} />
       </div>
     </div>

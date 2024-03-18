@@ -71,3 +71,79 @@ export const getProject=async()=>{
         throw new Error("Error fetching projects from database");
       }
 }
+
+export const editProject=async(values:z.infer<typeof projectSchema>,id:string)=>{
+  try {
+     
+      const validateFeilds=projectSchema.safeParse(values);
+      if(!validateFeilds.success){
+          return {error:"Invalid feilds"}
+      };
+
+      const {name}=validateFeilds.data
+      const slug=generateSlug(name);
+
+      // const existingProject=await getProjectBySlug(slug)
+
+      // if(existingProject){
+      //     return {error:"Project already exists"}
+      // }
+
+      const folder=createFolder(slug)
+      if(!folder){
+          return {error:"Something went wrong creating folder"}
+      }
+
+    if(!folder){
+      return {error:"Something went wrong"}
+    }
+      await db.project.update({
+        where:{
+          id
+        },
+          data:{
+              name,
+              slug,
+              folders:{
+                  create:{
+                      name:name,
+                      slug:slug,
+
+                  }
+              }
+          }
+      });
+
+      return{success:"Successfully updated project"}
+
+     
+
+      
+  } catch (error) {
+      console.error(error);
+      return {error:"Something went wrong"}
+  }
+}
+
+
+export const deleteProject=async(id:string)=>{
+  try {
+     
+     
+      await db.project.delete({
+        where:{
+          id
+        }
+         
+      });
+
+      return{success:"Successfully deleted project"}
+
+     
+
+      
+  } catch (error) {
+      console.error(error);
+      return {error:"Something went wrong"}
+  }
+}

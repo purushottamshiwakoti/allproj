@@ -249,146 +249,41 @@ export const EditQuestionForm = ({
             method="post"
             encType="multipart/form-data"
           >
-            <div className="grid grid-cols-2 gap-10">
-              {/* add questions start  */}
-              <div>
-                {/* question start  */}
+            {/* add questions start  */}
+            <div>
+              {/* question start  */}
+              <div className="space-y-2">
+                {questionType == "text" && (
+                  <FormField
+                    control={form.control}
+                    name="question"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Question</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Enter text question here"
+                            {...field}
+                            rows={1}
+                            disabled={isPending}
+                          />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+
                 <div>
-                  {questionType == "text" && (
-                    <FormField
-                      control={form.control}
-                      name="question"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Question</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="Enter text question here"
-                              {...field}
-                              rows={10}
-                              disabled={isPending}
-                            />
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-
-                  <div>
-                    {questionType == "image" && (
-                      <FormField
-                        control={form.control}
-                        name="questionImage"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Question Image</FormLabel>
-
-                            <FormControl>
-                              <div>
-                                <FileUploader
-                                  name="Add Image"
-                                  type="image"
-                                  value={field.value}
-                                  onChange={(value) => field.onChange(value)}
-                                />
-                              </div>
-                            </FormControl>
-
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    )}
-                    {questionType == "audio" && (
-                      <FormField
-                        control={form.control}
-                        name="questionAudio"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Question Audio</FormLabel>
-                            <FormControl>
-                              {/* <Input {...field} /> */}
-
-                              <div>
-                                <FileUploader
-                                  name="Add Audio"
-                                  type="audio"
-                                  value={field.value}
-                                  onChange={(value) => field.onChange(value)}
-                                />
-                              </div>
-                            </FormControl>
-
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    )}
-                    {questionType == "video" && (
-                      <FormField
-                        control={form.control}
-                        name="questionVideo"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Question Video</FormLabel>
-                            <FormControl>
-                              {/* <Input {...field} /> */}
-                              <div>
-                                <FileUploader
-                                  name="Add Video"
-                                  type="video"
-                                  value={field.value}
-                                  onChange={(value) => field.onChange(value)}
-                                />
-                              </div>
-                            </FormControl>
-
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    )}
-                  </div>
-                </div>
-
-                {/* question end  */}
-
-                {/* option1 start  */}
-                <div>
-                  {/* is correct  */}
-
-                  {/* is corret ends  */}
-                  {questionType == "text" && (
-                    <FormField
-                      control={form.control}
-                      name="option"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Option1</FormLabel>
-                          <FormControl>
-                            <Textarea
-                              placeholder="Enter text option1 here"
-                              {...field}
-                              rows={10}
-                              disabled={isPending}
-                            />
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
                   {questionType == "image" && (
                     <FormField
                       control={form.control}
-                      name="optionImage"
+                      name="questionImage"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Option1 Image</FormLabel>
-                          <div>{field.value}</div>
+                          <FormLabel>Question Image</FormLabel>
+
                           <FormControl>
                             <div>
                               <FileUploader
@@ -408,11 +303,13 @@ export const EditQuestionForm = ({
                   {questionType == "audio" && (
                     <FormField
                       control={form.control}
-                      name="optionAudio"
+                      name="questionAudio"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Option1 Audio</FormLabel>
+                          <FormLabel>Question Audio</FormLabel>
                           <FormControl>
+                            {/* <Input {...field} /> */}
+
                             <div>
                               <FileUploader
                                 name="Add Audio"
@@ -431,11 +328,12 @@ export const EditQuestionForm = ({
                   {questionType == "video" && (
                     <FormField
                       control={form.control}
-                      name="optionVideo"
+                      name="questionVideo"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Option1 Video</FormLabel>
+                          <FormLabel>Question Video</FormLabel>
                           <FormControl>
+                            {/* <Input {...field} /> */}
                             <div>
                               <FileUploader
                                 name="Add Video"
@@ -451,387 +349,485 @@ export const EditQuestionForm = ({
                       )}
                     />
                   )}
-                  <FormField
-                    control={form.control}
-                    name="correctOption"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="mr-2 ">Correct</FormLabel>
-                        <FormControl>
-                          <input
-                            type="radio"
-                            name="optionCorrect"
-                            className="mr-2 cursor-pointer"
-                            checked={field.value == "option"}
-                            onClick={() => field.onChange("option")}
-                          />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
                 </div>
-
-                {/* option1 end */}
-
-                {/* option2 srart  */}
-
-                <div className="">
-                  <div className="relative">
-                    {questionType == "text" && (
-                      <FormField
-                        control={form.control}
-                        name="option1"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Option2</FormLabel>
-                            <FormControl>
-                              <Textarea
-                                placeholder="Enter text option2 here"
-                                {...field}
-                                rows={10}
-                                disabled={isPending}
-                              />
-                            </FormControl>
-
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    )}
-                  </div>
-                  {questionType == "image" && (
-                    <FormField
-                      control={form.control}
-                      name="option1Image"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Option2 Image</FormLabel>
-                          <FormControl>
-                            <div>
-                              <FileUploader
-                                name="Add Image"
-                                type="image"
-                                value={field.value}
-                                onChange={(value) => field.onChange(value)}
-                              />
-                            </div>
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-                  {questionType == "audio" && (
-                    <FormField
-                      control={form.control}
-                      name="option1Audio"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Option2 Audio</FormLabel>
-                          <FormControl>
-                            <div>
-                              <FileUploader
-                                name="Add Audio"
-                                type="audio"
-                                value={field.value}
-                                onChange={(value) => field.onChange(value)}
-                              />
-                            </div>
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-                  {questionType == "video" && (
-                    <FormField
-                      control={form.control}
-                      name="option1Video"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Option2 Video</FormLabel>
-                          <FormControl>
-                            <div>
-                              <FileUploader
-                                name="Add Video"
-                                type="video"
-                                value={field.value}
-                                onChange={(value) => field.onChange(value)}
-                              />
-                            </div>
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-                  <FormField
-                    control={form.control}
-                    name="correctOption"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="mr-2 ">Correct</FormLabel>
-                        <FormControl>
-                          <input
-                            type="radio"
-                            name="optionCorrect"
-                            className="mr-2 cursor-pointer"
-                            checked={field.value == "option1"}
-                            onClick={() => field.onChange("option1")}
-                          />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                {/* option 2 end  */}
-
-                {/* option 3 start  */}
-                <div className="">
-                  <div className="relative">
-                    <div className=" "></div>
-                    {questionType == "text" && (
-                      <FormField
-                        control={form.control}
-                        name="option2"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Option3</FormLabel>
-                            <FormControl>
-                              <Textarea
-                                placeholder="Enter text option3 here"
-                                {...field}
-                                rows={10}
-                                disabled={isPending}
-                              />
-                            </FormControl>
-
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    )}
-                  </div>
-                  {questionType == "image" && (
-                    <FormField
-                      control={form.control}
-                      name="option2Image"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Option3 Image</FormLabel>
-                          <FormControl>
-                            <div>
-                              <FileUploader
-                                name="Add Image"
-                                type="image"
-                                value={field.value}
-                                onChange={(value) => field.onChange(value)}
-                              />
-                            </div>
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-                  {questionType == "audio" && (
-                    <FormField
-                      control={form.control}
-                      name="option2Audio"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Option3 Audio</FormLabel>
-                          <FormControl>
-                            <div>
-                              <FileUploader
-                                name="Add Audio"
-                                type="audio"
-                                value={field.value}
-                                onChange={(value) => field.onChange(value)}
-                              />
-                            </div>
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-                  {questionType == "video" && (
-                    <FormField
-                      control={form.control}
-                      name="option2Video"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Option3 Video</FormLabel>
-                          <FormControl>
-                            <div>
-                              <FileUploader
-                                name="Add Video"
-                                type="video"
-                                value={field.value}
-                                onChange={(value) => field.onChange(value)}
-                              />
-                            </div>
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-                  <FormField
-                    control={form.control}
-                    name="correctOption"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="mr-2 ">Correct</FormLabel>
-                        <FormControl>
-                          <input
-                            type="radio"
-                            name="optionCorrect"
-                            className="mr-2 cursor-pointer"
-                            checked={field.value == "option2"}
-                            onClick={() => field.onChange("option2")}
-                          />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                {/* option 3 end */}
-
-                {/* option 4 start  */}
-                <div className="">
-                  <div className="relative">
-                    <div className=" "></div>
-                    {questionType == "text" && (
-                      <FormField
-                        control={form.control}
-                        name="option3"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Option4</FormLabel>
-                            <FormControl>
-                              <Textarea
-                                placeholder="Enter text option4 here"
-                                {...field}
-                                rows={10}
-                                disabled={isPending}
-                              />
-                            </FormControl>
-
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    )}
-                  </div>
-                  {questionType == "image" && (
-                    <FormField
-                      control={form.control}
-                      name="option3Image"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Option4 Image</FormLabel>
-                          <FormControl>
-                            <div>
-                              <FileUploader
-                                name="Add Image"
-                                type="image"
-                                value={field.value}
-                                onChange={(value) => field.onChange(value)}
-                              />
-                            </div>
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-                  {questionType == "audio" && (
-                    <FormField
-                      control={form.control}
-                      name="option3Audio"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Option4 Audio</FormLabel>
-                          <FormControl>
-                            <div>
-                              <FileUploader
-                                name="Add Audio"
-                                type="audio"
-                                value={field.value}
-                                onChange={(value) => field.onChange(value)}
-                              />
-                            </div>
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-                  {questionType == "video" && (
-                    <FormField
-                      control={form.control}
-                      name="option3Video"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Option4 Video</FormLabel>
-                          <FormControl>
-                            <div>
-                              <FileUploader
-                                name="Add Video"
-                                type="video"
-                                value={field.value}
-                                onChange={(value) => field.onChange(value)}
-                              />
-                            </div>
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  )}
-                  <FormField
-                    control={form.control}
-                    name="correctOption"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="mr-2 ">Correct</FormLabel>
-                        <FormControl>
-                          <input
-                            type="radio"
-                            name="optionCorrect"
-                            className="mr-2 cursor-pointer"
-                            checked={field.value == "option3"}
-                            onClick={() => field.onChange("option3")}
-                          />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                {/* option 4 end */}
               </div>
-              {/* add questions end  */}
-              {/* categories start */}
-              <div className="space-y-5">
+
+              {/* question end  */}
+
+              {/* option1 start  */}
+              <div className="space-y-2">
+                {/* is correct  */}
+
+                {/* is corret ends  */}
+                {questionType == "text" && (
+                  <FormField
+                    control={form.control}
+                    name="option"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Option1</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Enter text option1 here"
+                            {...field}
+                            rows={1}
+                            disabled={isPending}
+                          />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {questionType == "image" && (
+                  <FormField
+                    control={form.control}
+                    name="optionImage"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Option1 Image</FormLabel>
+                        <div>{field.value}</div>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              name="Add Image"
+                              type="image"
+                              value={field.value}
+                              onChange={(value) => field.onChange(value)}
+                            />
+                          </div>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {questionType == "audio" && (
+                  <FormField
+                    control={form.control}
+                    name="optionAudio"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Option1 Audio</FormLabel>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              name="Add Audio"
+                              type="audio"
+                              value={field.value}
+                              onChange={(value) => field.onChange(value)}
+                            />
+                          </div>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {questionType == "video" && (
+                  <FormField
+                    control={form.control}
+                    name="optionVideo"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Option1 Video</FormLabel>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              name="Add Video"
+                              type="video"
+                              value={field.value}
+                              onChange={(value) => field.onChange(value)}
+                            />
+                          </div>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                <FormField
+                  control={form.control}
+                  name="correctOption"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="mr-2 ">Correct</FormLabel>
+                      <FormControl>
+                        <input
+                          type="radio"
+                          name="optionCorrect"
+                          className="mr-2 cursor-pointer"
+                          checked={field.value == "option"}
+                          onClick={() => field.onChange("option")}
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* option1 end */}
+
+              {/* option2 srart  */}
+
+              <div className="space-y-2">
+                <div className="relative">
+                  {questionType == "text" && (
+                    <FormField
+                      control={form.control}
+                      name="option1"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Option2</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              placeholder="Enter text option2 here"
+                              {...field}
+                              rows={1}
+                              disabled={isPending}
+                            />
+                          </FormControl>
+
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+                </div>
+                {questionType == "image" && (
+                  <FormField
+                    control={form.control}
+                    name="option1Image"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Option2 Image</FormLabel>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              name="Add Image"
+                              type="image"
+                              value={field.value}
+                              onChange={(value) => field.onChange(value)}
+                            />
+                          </div>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {questionType == "audio" && (
+                  <FormField
+                    control={form.control}
+                    name="option1Audio"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Option2 Audio</FormLabel>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              name="Add Audio"
+                              type="audio"
+                              value={field.value}
+                              onChange={(value) => field.onChange(value)}
+                            />
+                          </div>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {questionType == "video" && (
+                  <FormField
+                    control={form.control}
+                    name="option1Video"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Option2 Video</FormLabel>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              name="Add Video"
+                              type="video"
+                              value={field.value}
+                              onChange={(value) => field.onChange(value)}
+                            />
+                          </div>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                <FormField
+                  control={form.control}
+                  name="correctOption"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="mr-2 ">Correct</FormLabel>
+                      <FormControl>
+                        <input
+                          type="radio"
+                          name="optionCorrect"
+                          className="mr-2 cursor-pointer"
+                          checked={field.value == "option1"}
+                          onClick={() => field.onChange("option1")}
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              {/* option 2 end  */}
+
+              {/* option 3 start  */}
+              <div className=" space-y-2 mt-2">
+                <div className="relative">
+                  <div className=" "></div>
+                  {questionType == "text" && (
+                    <FormField
+                      control={form.control}
+                      name="option2"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Option3</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              placeholder="Enter text option3 here"
+                              {...field}
+                              rows={1}
+                              disabled={isPending}
+                            />
+                          </FormControl>
+
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+                </div>
+                {questionType == "image" && (
+                  <FormField
+                    control={form.control}
+                    name="option2Image"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Option3 Image</FormLabel>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              name="Add Image"
+                              type="image"
+                              value={field.value}
+                              onChange={(value) => field.onChange(value)}
+                            />
+                          </div>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {questionType == "audio" && (
+                  <FormField
+                    control={form.control}
+                    name="option2Audio"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Option3 Audio</FormLabel>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              name="Add Audio"
+                              type="audio"
+                              value={field.value}
+                              onChange={(value) => field.onChange(value)}
+                            />
+                          </div>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {questionType == "video" && (
+                  <FormField
+                    control={form.control}
+                    name="option2Video"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Option3 Video</FormLabel>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              name="Add Video"
+                              type="video"
+                              value={field.value}
+                              onChange={(value) => field.onChange(value)}
+                            />
+                          </div>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                <FormField
+                  control={form.control}
+                  name="correctOption"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="mr-2 ">Correct</FormLabel>
+                      <FormControl>
+                        <input
+                          type="radio"
+                          name="optionCorrect"
+                          className="mr-2 cursor-pointer"
+                          checked={field.value == "option2"}
+                          onClick={() => field.onChange("option2")}
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              {/* option 3 end */}
+
+              {/* option 4 start  */}
+              <div className="mt-2">
+                <div className="relative">
+                  <div className=" "></div>
+                  {questionType == "text" && (
+                    <FormField
+                      control={form.control}
+                      name="option3"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Option4</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              placeholder="Enter text option4 here"
+                              {...field}
+                              rows={1}
+                              disabled={isPending}
+                            />
+                          </FormControl>
+
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+                </div>
+                {questionType == "image" && (
+                  <FormField
+                    control={form.control}
+                    name="option3Image"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Option4 Image</FormLabel>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              name="Add Image"
+                              type="image"
+                              value={field.value}
+                              onChange={(value) => field.onChange(value)}
+                            />
+                          </div>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {questionType == "audio" && (
+                  <FormField
+                    control={form.control}
+                    name="option3Audio"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Option4 Audio</FormLabel>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              name="Add Audio"
+                              type="audio"
+                              value={field.value}
+                              onChange={(value) => field.onChange(value)}
+                            />
+                          </div>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {questionType == "video" && (
+                  <FormField
+                    control={form.control}
+                    name="option3Video"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Option4 Video</FormLabel>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              name="Add Video"
+                              type="video"
+                              value={field.value}
+                              onChange={(value) => field.onChange(value)}
+                            />
+                          </div>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                <FormField
+                  control={form.control}
+                  name="correctOption"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="mr-2 ">Correct</FormLabel>
+                      <FormControl>
+                        <input
+                          type="radio"
+                          name="optionCorrect"
+                          className="mr-2 cursor-pointer"
+                          checked={field.value == "option3"}
+                          onClick={() => field.onChange("option3")}
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              {/* option 4 end */}
+              <div className="grid grid-cols-3 gap-3 mt-2">
                 <FormField
                   control={form.control}
                   name="typeOfQuestionId"
@@ -932,8 +928,11 @@ export const EditQuestionForm = ({
                   )}
                 />
               </div>
-              {/* categories end*/}
             </div>
+            {/* add questions end  */}
+            {/* categories start */}
+
+            {/* categories end*/}
 
             <Button type="submit" className="w-full" disabled={isPending}>
               Save

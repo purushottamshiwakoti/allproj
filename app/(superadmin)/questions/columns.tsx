@@ -25,6 +25,7 @@ export type Category = {
   option3: string | null;
   option4: string | null;
   correctOption: string;
+  project: string | null | undefined;
   sn: number;
 };
 
@@ -64,11 +65,15 @@ export const columns: ColumnDef<Category>[] = [
     accessorKey: "option4",
     header: "Option 4",
   },
-
   {
-    id: "actions",
-    cell: CustomCell,
+    accessorKey: "project",
+    header: "Project",
   },
+
+  //   {
+  //     id: "actions",
+  //     cell: CustomCell,
+  //   },
 ];
 
 function CustomCell({ row }: { row: any }) {

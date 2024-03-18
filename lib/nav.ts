@@ -42,14 +42,14 @@ export const sidebarNav=[
         isSubAdmin:true,
 
     },
-    {
-        name:"Projects",
-        href:"/projects",
-        isSuperAdmin:true,
-        isAdmin:false,
-        isSubAdmin:false,
+    // {
+    //     name:"Projects",
+    //     href:"/projects",
+    //     isSuperAdmin:true,
+    //     isAdmin:false,
+    //     isSubAdmin:false,
 
-    },
+    // },
     {
         name:"Files",
         href:"/files",

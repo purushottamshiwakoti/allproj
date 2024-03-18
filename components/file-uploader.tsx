@@ -113,7 +113,7 @@ export const FileUploader = ({
       {!file && removedValue ? (
         <div
           {...getRootProps()}
-          className="dropzone text-center border-dashed border-2 border-gray-300 p-6  h-[20rem] w-[20rem] rounded-md"
+          className="dropzone text-center border-dashed border-2 border-gray-300 p-6 my-2 rounded-md"
         >
           <input {...getInputProps()} />
           <p className="text-gray-600 flex items-center justify-center h-full capitalize">
