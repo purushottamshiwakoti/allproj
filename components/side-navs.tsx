@@ -104,6 +104,13 @@ export const SideNavs = () => {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
+              <Button
+                className="w-full flex justify-start text-white"
+                variant={path.includes("/files") ? "default" : "link"}
+                asChild
+              >
+                <Link href={`/${params.id}/files`}>Files</Link>
+              </Button>
             </div>
           ) : (
             // <Link href={item.href}>{item.name}</Link>
@@ -174,6 +181,13 @@ export const SideNavs = () => {
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
+                <Button
+                  className="w-full flex justify-start text-white"
+                  variant={path.includes("/files") ? "default" : "link"}
+                  asChild
+                >
+                  <Link href={`/${params.id}/files`}>Files</Link>
+                </Button>
               </div>
             </>
           )}
