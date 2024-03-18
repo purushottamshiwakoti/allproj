@@ -300,26 +300,7 @@ export const AddQuestionForm = ({
                 {/* option1 start  */}
                 <div>
                   {/* is correct  */}
-                  <FormField
-                    control={form.control}
-                    name="correctOption"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="mr-2 ">Correct</FormLabel>
-                        <FormControl>
-                          <input
-                            type="radio"
-                            name="optionCorrect"
-                            className="mr-2 cursor-pointer"
-                            checked={field.value == "option"}
-                            onClick={() => field.onChange("option")}
-                          />
-                        </FormControl>
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
                   {/* is corret ends  */}
                   {questionType == "text" && (
                     <FormField
@@ -327,7 +308,7 @@ export const AddQuestionForm = ({
                       name="option"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Option</FormLabel>
+                          <FormLabel>Option1</FormLabel>
                           <FormControl>
                             <Textarea
                               placeholder="Enter text option1 here"
@@ -342,13 +323,14 @@ export const AddQuestionForm = ({
                       )}
                     />
                   )}
+
                   {questionType == "image" && (
                     <FormField
                       control={form.control}
                       name="optionImage"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Option Image</FormLabel>
+                          <FormLabel>Option1 Image</FormLabel>
                           <FormControl>
                             <div>
                               <FileUploader
@@ -371,7 +353,7 @@ export const AddQuestionForm = ({
                       name="optionAudio"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Option Audio</FormLabel>
+                          <FormLabel>Option1 Audio</FormLabel>
                           <FormControl>
                             <div>
                               <FileUploader
@@ -394,7 +376,7 @@ export const AddQuestionForm = ({
                       name="optionVideo"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Option Video</FormLabel>
+                          <FormLabel>Option1 Video</FormLabel>
                           <FormControl>
                             <div>
                               <FileUploader
@@ -412,32 +394,32 @@ export const AddQuestionForm = ({
                     />
                   )}
                 </div>
+                <FormField
+                  control={form.control}
+                  name="correctOption"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="mr-2 ">Correct</FormLabel>
+                      <FormControl>
+                        <input
+                          type="radio"
+                          name="optionCorrect"
+                          className="mr-2 cursor-pointer"
+                          checked={field.value == "option"}
+                          onClick={() => field.onChange("option")}
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
                 {/* option1 end */}
 
                 {/* option2 srart  */}
 
                 <div className="">
-                  <FormField
-                    control={form.control}
-                    name="correctOption"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="mr-2 ">Correct</FormLabel>
-                        <FormControl>
-                          <input
-                            type="radio"
-                            name="optionCorrect"
-                            className="mr-2 cursor-pointer"
-                            checked={field.value == "option1"}
-                            onClick={() => field.onChange("option1")}
-                          />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
                   <div className="relative">
                     {questionType == "text" && (
                       <FormField
@@ -530,34 +512,33 @@ export const AddQuestionForm = ({
                       )}
                     />
                   )}
+                  <FormField
+                    control={form.control}
+                    name="correctOption"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="mr-2 ">Correct</FormLabel>
+                        <FormControl>
+                          <input
+                            type="radio"
+                            name="optionCorrect"
+                            className="mr-2 cursor-pointer"
+                            checked={field.value == "option1"}
+                            onClick={() => field.onChange("option1")}
+                          />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
                 {/* option 2 end  */}
 
                 {/* option 3 start  */}
                 <div className="">
                   <div className="relative">
-                    <div className=" ">
-                      <FormField
-                        control={form.control}
-                        name="correctOption"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="mr-2 ">Correct</FormLabel>
-                            <FormControl>
-                              <input
-                                type="radio"
-                                name="optionCorrect"
-                                className="mr-2 cursor-pointer"
-                                checked={field.value == "option2"}
-                                onClick={() => field.onChange("option2")}
-                              />
-                            </FormControl>
-
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+                    <div className=" "></div>
                     {questionType == "text" && (
                       <FormField
                         control={form.control}
@@ -649,34 +630,33 @@ export const AddQuestionForm = ({
                       )}
                     />
                   )}
+                  <FormField
+                    control={form.control}
+                    name="correctOption"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="mr-2 ">Correct</FormLabel>
+                        <FormControl>
+                          <input
+                            type="radio"
+                            name="optionCorrect"
+                            className="mr-2 cursor-pointer"
+                            checked={field.value == "option2"}
+                            onClick={() => field.onChange("option2")}
+                          />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
                 {/* option 3 end */}
 
                 {/* option 4 start  */}
                 <div className="">
                   <div className="relative">
-                    <div className=" ">
-                      <FormField
-                        control={form.control}
-                        name="correctOption"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="mr-2 ">Correct</FormLabel>
-                            <FormControl>
-                              <input
-                                type="radio"
-                                name="optionCorrect"
-                                className="mr-2 cursor-pointer"
-                                checked={field.value == "option3"}
-                                onClick={() => field.onChange("option3")}
-                              />
-                            </FormControl>
-
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+                    <div className=" "></div>
                     {questionType == "text" && (
                       <FormField
                         control={form.control}
@@ -768,6 +748,26 @@ export const AddQuestionForm = ({
                       )}
                     />
                   )}
+                  <FormField
+                    control={form.control}
+                    name="correctOption"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="mr-2 ">Correct</FormLabel>
+                        <FormControl>
+                          <input
+                            type="radio"
+                            name="optionCorrect"
+                            className="mr-2 cursor-pointer"
+                            checked={field.value == "option3"}
+                            onClick={() => field.onChange("option3")}
+                          />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
                 {/* option 4 end */}
               </div>
@@ -779,7 +779,10 @@ export const AddQuestionForm = ({
                   name="typeOfQuestionId"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Type of question</FormLabel>
+                      <FormLabel>
+                        Type of question
+                        <span className="text-red-500 ml-1">*</span>
+                      </FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
@@ -807,7 +810,10 @@ export const AddQuestionForm = ({
                   name="categoryId"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Select Category</FormLabel>
+                      <FormLabel>
+                        Select Category
+                        <span className="text-red-500 ml-1">*</span>
+                      </FormLabel>
                       <Select
                         onValueChange={(value) => {
                           field.onChange(value), setCategory(value);
@@ -837,7 +843,10 @@ export const AddQuestionForm = ({
                   name="subCategoryId"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Sub Category</FormLabel>
+                      <FormLabel>
+                        Sub Category
+                        <span className="text-red-500 ml-1">*</span>
+                      </FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}

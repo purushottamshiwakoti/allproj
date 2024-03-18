@@ -37,6 +37,7 @@ export const EditQuestionTypeForm = ({
   const { setIsOpen } = useProjectlDialog();
   const router = useRouter();
   const params = useParams();
+  console.log(params);
   const [isPending, startTransistion] = useTransition();
   const form = useForm<z.infer<typeof questionTypeSchema>>({
     resolver: zodResolver(questionTypeSchema),
@@ -54,7 +55,7 @@ export const EditQuestionTypeForm = ({
         }
         if (data?.success) {
           toast.success(data.success);
-          router.push(`/${params.questionTypeId}/question-type`);
+          router.push(`/${params.id}/question-type`);
           router.refresh();
         }
       });
