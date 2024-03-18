@@ -140,8 +140,8 @@ export const AddUserForm = () => {
                   {id == undefined && (
                     <SelectItem value="SUPERADMIN">SUPERADMIN</SelectItem>
                   )}
-                  {/* <SelectItem value="ADMIN">ADMIN</SelectItem>
-                  <SelectItem value="SUBADMIN">SUBADMIN</SelectItem> */}
+                  <SelectItem value="ADMIN">ADMIN</SelectItem>
+                  <SelectItem value="SUBADMIN">SUBADMIN</SelectItem>
                 </SelectContent>
               </Select>
 
