@@ -126,8 +126,8 @@ export const FileUploader = ({
             (file.type.includes("image") ? (
               <div>
                 <Image
-                  src={`${nextUrl}\\${value}`}
-                  alt={`Uploaded Image `}
+                  src={`${file.url}`}
+                  alt={`uploaded url`}
                   fill
                   className=" rounded-md"
                 />
