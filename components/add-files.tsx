@@ -59,6 +59,8 @@ export const AddFiles = ({ totalCount }: { totalCount: number }) => {
     onDrop,
   });
 
+  console.log(params);
+
   const handleRemoveImage = (image: any) => {
     const filteredImages = _.filter(
       imageFiles,
@@ -124,7 +126,8 @@ export const AddFiles = ({ totalCount }: { totalCount: number }) => {
         setAudioFiles([]);
         setImagesFiles([]);
         router.refresh();
-        location.reload();
+        // location.reload();
+        router.push(`/${params.id}/files/${params.folder}`);
         //        window.location.assign("https://www.instagram.com/");
       } else {
         // Handle response error
