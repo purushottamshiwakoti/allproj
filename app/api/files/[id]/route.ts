@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import fs from "fs/promises"; // Import fs promises for async file operations
 import db from "@/lib/db";
-import { exec } from 'child_process'; // Import exec for executing shell commands
 
 export async function POST(req: NextRequest, params: any) {
     try {
@@ -65,20 +64,9 @@ export async function POST(req: NextRequest, params: any) {
         // Wait for all file saving operations to complete
         await Promise.all(promises);
 
-        // Execute pm2 restart command
-        exec("pm2 restart myapp", (error, stdout, stderr) => {
-            if (error || stderr) {
-                const errorMessage = error ? error.message : '';
-                const stderrMessage = stderr ? stderr.toString() : '';
-                console.error(`Error executing pm2 restart myapp: ${errorMessage}\n${stderrMessage}`);
-            } else {
-                console.log(`pm2 restart myapp output: ${stdout}`);
-            }
-        });
-
         return NextResponse.json({ message: "Files saved successfully" }, { status: 200 });
     } catch (error) {
-        console.log("Error:", error);
+        console.error("Error:", error);
         return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
     }
 }
