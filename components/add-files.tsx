@@ -103,11 +103,14 @@ export const AddFiles = ({ totalCount }: { totalCount: number }) => {
 
     // Create a new FormData object
     const formData = new FormData();
+    console.log({ formData });
 
     // Append each file to the FormData object
     files.forEach((file, index) => {
       formData.append("projectId", projectId as string);
       formData.append(`file${index}`, file);
+      console.log(file);
+      console.log(index);
     });
 
     // Append projectId to the FormData object
