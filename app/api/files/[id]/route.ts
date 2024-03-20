@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import fs from "fs"; // Import fs for synchronous file operations
 import db from "@/lib/db";
+import { exec } from "child_process";
+
 
 export async function POST(req: NextRequest, params: any) {
     try {
@@ -66,10 +68,25 @@ export async function POST(req: NextRequest, params: any) {
 
         // Wait for all file saving operations to complete
         await Promise.all(promises);
-
+        restartServer();
         return NextResponse.json({ message: "Files saved successfully" }, { status: 200 });
     } catch (error) {
         console.log("Error:", error);
         return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
     }
+}
+
+async function restartServer() {
+    // Use PM2 to restart the Node.js process
+    exec("pm2 restart myapp", (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error restarting server: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.error(`stderr while restarting server: ${stderr}`);
+            return;
+        }
+        console.log(`Server restarted successfully: ${stdout}`);
+    });
 }

@@ -128,6 +128,8 @@ export const AddFiles = ({ totalCount }: { totalCount: number }) => {
         // location.reload();
         router.push(`/${params.id}/files/${params.folder}`);
         router.refresh();
+        window.location.reload();
+
         //        window.location.assign("https://www.instagram.com/");
       } else {
         // Handle response error
