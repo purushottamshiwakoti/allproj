@@ -71,9 +71,16 @@ export async function POST(req: NextRequest, params: any) {
      console.log({uploadFile})
         restartServer();
         return NextResponse.json({ message: "Files saved successfully" }, { status: 200 });
-    } catch (error) {
-        console.log("Error:", error);
-        return NextResponse.json({ error }, { status: 500 });
+    } 
+    // catch (error) {
+    //     console.log("Error:", error);
+    //     return NextResponse.json({ error }, { status: 500 });
+    // }
+    catch (error) {
+        console.error("Error:", error);
+    
+        // Return a JSON response with an error message and status code
+        return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
     }
 }
 
