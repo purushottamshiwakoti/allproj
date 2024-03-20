@@ -139,7 +139,7 @@ export const AddFiles = ({ totalCount }: { totalCount: number }) => {
       }
     } catch (error: any) {
       // Handle fetch error
-      console.log("Error uploading files below:", error);
+      console.log("Error uploading files below:", error.message);
       console.error("Error uploading files below:", error);
       toast.error("Someting went wrong");
     } finally {
