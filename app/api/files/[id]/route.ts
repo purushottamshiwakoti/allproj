@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
-import fs from "fs"; // Import fs for synchronous file operations
+import fs from "fs/promises"; // Import fs promises for asynchronous file operations
 import db from "@/lib/db";
 import { exec } from "child_process";
 
@@ -43,31 +43,32 @@ export async function POST(req: NextRequest, params: any) {
 
                 // Read file content
                 const fileContent = await file.arrayBuffer();
+                console.log({fileContent})
                 
                 // Write file to disk asynchronously
                 promises.push(
                     new Promise<void>((resolve, reject) => {
-                        fs.writeFile(filePath, Buffer.from(fileContent), (error) => {
-                            if (error) {
-                                reject(error);
-                            } else {
+                        fs.writeFile(filePath, Buffer.from(fileContent))
+                            .then(() => {
                                 const fileNameWithPath = `${projectName}/${folderName}/${fileName}`;
-                                db.files.create({
+                                return db.files.create({
                                     data: {
                                         name: fileNameWithPath,
                                         slug: fileNameWithPath,
                                         subFolderId: folder.id
                                     }
-                                }).then(() => resolve()).catch(reject);
-                            }
-                        });
+                                });
+                            })
+                            .then(() => resolve())
+                            .catch(reject);
                     })
                 );
             }
         }
 
         // Wait for all file saving operations to complete
-        await Promise.all(promises);
+     const uploadFile=   await Promise.all(promises);
+     console.log({uploadFile})
         restartServer();
         return NextResponse.json({ message: "Files saved successfully" }, { status: 200 });
     } catch (error) {
