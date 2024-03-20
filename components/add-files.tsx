@@ -133,14 +133,14 @@ export const AddFiles = ({ totalCount }: { totalCount: number }) => {
       } else {
         // Handle response error
         const responseData = await response.json();
-        console.log("Error uploading files:", responseData.message);
-        console.error("Error uploading files:", responseData.message);
+        console.log("Error uploading files above :", responseData.message);
+        console.error("Error uploading files above:", responseData.message);
         toast.error("Error uploading files");
       }
     } catch (error: any) {
       // Handle fetch error
-      console.log("Error uploading files:", error);
-      console.error("Error uploading files:", error);
+      console.log("Error uploading files below:", error);
+      console.error("Error uploading files below:", error);
       toast.error("Someting went wrong");
     } finally {
       setLoading(false);
