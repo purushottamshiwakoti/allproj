@@ -134,11 +134,13 @@ export const AddFiles = ({ totalCount }: { totalCount: number }) => {
         // Handle response error
         const responseData = await response.json();
         console.log("Error uploading files:", responseData.message);
+        console.error("Error uploading files:", responseData.message);
         toast.error("Error uploading files");
       }
     } catch (error: any) {
       // Handle fetch error
       console.log("Error uploading files:", error);
+      console.error("Error uploading files:", error);
       toast.error(error);
     } finally {
       setLoading(false);
