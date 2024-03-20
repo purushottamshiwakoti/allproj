@@ -54,7 +54,7 @@ export async function POST(req: NextRequest, params: any) {
                             });
                         })
                         .catch(error => {
-                            console.error("Error writing file:", error);
+                            console.log("Error writing file:", error);
                             throw error;
                         })
                 );
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest, params: any) {
 
         return NextResponse.json({ message: "Files saved successfully" }, { status: 200 });
     } catch (error) {
-        console.error("Error:", error);
+        console.log("Error:", error);
         return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
     }
 }
