@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
-import fs from "fs/promises"; // Import fs promises for async file operations
+import fs from "fs"; // Import fs for synchronous file operations
 import db from "@/lib/db";
 
 export async function POST(req: NextRequest, params: any) {
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest, params: any) {
         let projectName: string | undefined;
         const promises = [];
 
-        for (const [name, file] of data.entries()) {
+        for await (const [name, file] of data.entries()) {
             if (name === "projectId") {
                 const project = await db.project.findUnique({
                     where: {
@@ -36,27 +36,30 @@ export async function POST(req: NextRequest, params: any) {
             }
 
             if (file && typeof file === "object") {
-                const byteData = await file.arrayBuffer();
-                const buffer = Buffer.from(byteData);
-                const filePath = path.join(process.cwd(), "public", projectName, folderName, file.name);
+                const fileName = file.name;
+                const filePath = path.join(process.cwd(), "public", projectName, folderName, fileName);
 
+                // Read file content
+                const fileContent = await file.arrayBuffer();
+                
                 // Write file to disk asynchronously
                 promises.push(
-                    fs.writeFile(filePath, buffer)
-                        .then(async () => {
-                            const fileName = `${projectName}/${folderName}/${file.name}`;
-                            await db.files.create({
-                                data: {
-                                    name: fileName,
-                                    slug: fileName,
-                                    subFolderId: folder.id
-                                }
-                            });
-                        })
-                        .catch(error => {
-                            console.log("Error writing file:", error);
-                            throw error;
-                        })
+                    new Promise<void>((resolve, reject) => {
+                        fs.writeFile(filePath, Buffer.from(fileContent), (error) => {
+                            if (error) {
+                                reject(error);
+                            } else {
+                                const fileNameWithPath = `${projectName}/${folderName}/${fileName}`;
+                                db.files.create({
+                                    data: {
+                                        name: fileNameWithPath,
+                                        slug: fileNameWithPath,
+                                        subFolderId: folder.id
+                                    }
+                                }).then(() => resolve()).catch(reject);
+                            }
+                        });
+                    })
                 );
             }
         }
