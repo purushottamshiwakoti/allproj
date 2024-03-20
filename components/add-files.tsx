@@ -141,7 +141,7 @@ export const AddFiles = ({ totalCount }: { totalCount: number }) => {
       // Handle fetch error
       console.log("Error uploading files:", error);
       console.error("Error uploading files:", error);
-      toast.error(error);
+      toast.error("Someting went wrong");
     } finally {
       setLoading(false);
     }
