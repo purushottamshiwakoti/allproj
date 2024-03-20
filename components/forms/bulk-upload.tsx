@@ -173,22 +173,18 @@ export const BulkUpload = () => {
                     <TableHead>questionAudio</TableHead>
                     <TableHead>questionVideo</TableHead>
                     <TableHead>option</TableHead>
-                    <TableHead>optionCorrect</TableHead>
                     <TableHead>optionImage</TableHead>
                     <TableHead>optionAudio</TableHead>
                     <TableHead>optionVideo</TableHead>
                     <TableHead>option1</TableHead>
-                    <TableHead>option1Correct</TableHead>
                     <TableHead>option1Image</TableHead>
                     <TableHead>option1Audio</TableHead>
                     <TableHead>option1Video</TableHead>
                     <TableHead>option2</TableHead>
-                    <TableHead>option2Correct</TableHead>
                     <TableHead>option2Image</TableHead>
                     <TableHead>option2Audio</TableHead>
                     <TableHead>option2Video</TableHead>
                     <TableHead>option3</TableHead>
-                    <TableHead>option3Correct</TableHead>
                     <TableHead>option3Image</TableHead>
                     <TableHead>option3Audio</TableHead>
                     <TableHead>option3Video</TableHead>

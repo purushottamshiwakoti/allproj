@@ -186,7 +186,7 @@ export const SideNavs = () => {
                   variant={path.includes("/files") ? "default" : "link"}
                   asChild
                 >
-                  <Link href={`/${params.id}/files`}>Files</Link>
+                  <Link href={`/files`}>Files</Link>
                 </Button>
               </div>
             </>

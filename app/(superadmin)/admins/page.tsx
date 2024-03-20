@@ -47,7 +47,7 @@ const AdminsPage = async ({ searchParams }: { searchParams: any }) => {
     <div>
       {/* <AddButton href="/admins/add" /> */}
       <div className="mt-5">
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-3 space-x-4">
           <Search searchKey={"name"} searchParams={searchParams} />
           <Search searchKey={"email"} searchParams={searchParams} />
         </div>

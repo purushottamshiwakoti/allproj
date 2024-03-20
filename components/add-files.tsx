@@ -125,9 +125,9 @@ export const AddFiles = ({ totalCount }: { totalCount: number }) => {
         setImagesFiles([]);
         setAudioFiles([]);
         setImagesFiles([]);
-        router.refresh();
         // location.reload();
         router.push(`/${params.id}/files/${params.folder}`);
+        router.refresh();
         //        window.location.assign("https://www.instagram.com/");
       } else {
         // Handle response error
