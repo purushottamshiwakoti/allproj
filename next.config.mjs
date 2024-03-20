@@ -2,16 +2,16 @@
 const nextConfig = {
   experimental: {
     serverActions: {
-      bodySizeLimit: "5mb",
+      bodySizeLimit: "50mb", // Adjust the limit to 50MB
     },
     api: {
       bodyParser: {
-        sizeLimit: "20mb",
+        sizeLimit: "50mb", // Adjust the limit to 50MB
       },
     },
   },
   images: {
-    domains: ["localhost"],
+    domains: ["localhost", "instantbackgroundremover"],
   },
 };
 
