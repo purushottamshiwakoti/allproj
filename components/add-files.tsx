@@ -128,7 +128,6 @@ export const AddFiles = ({ totalCount }: { totalCount: number }) => {
         // location.reload();
         router.push(`/${params.id}/files/${params.folder}`);
         router.refresh();
-        window.location.reload();
 
         //        window.location.assign("https://www.instagram.com/");
       } else {
@@ -137,10 +136,10 @@ export const AddFiles = ({ totalCount }: { totalCount: number }) => {
         console.log("Error uploading files:", responseData.message);
         toast.error("Error uploading files");
       }
-    } catch (error) {
+    } catch (error: any) {
       // Handle fetch error
       console.log("Error uploading files:", error);
-      toast.error("Something went wrong");
+      toast.error(error);
     } finally {
       setLoading(false);
     }
