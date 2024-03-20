@@ -4,6 +4,11 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: "5mb",
     },
+    api: {
+      bodyParser: {
+        sizeLimit: "20mb",
+      },
+    },
   },
   images: {
     domains: ["localhost"],
