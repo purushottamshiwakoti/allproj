@@ -24,7 +24,7 @@ export type Category = {
   option2: string | null;
   option3: string | null;
   option4: string | null;
-  correctOption: string;
+  correctOption: string | null;
   project: string | null | undefined;
   sn: number;
 };

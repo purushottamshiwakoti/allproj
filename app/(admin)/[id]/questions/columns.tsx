@@ -15,25 +15,25 @@ export type Category = {
   id: string;
   question: {
     name: string | null;
-    type: "audio" | "video" | "text" | "image";
+    type: any;
   };
   option1: {
     name: string | null;
-    type: "audio" | "video" | "text" | "image";
+    type: any;
   };
   option2: {
     name: string | null;
-    type: "audio" | "video" | "text" | "image";
+    type: any;
   };
   option3: {
     name: string | null;
-    type: "audio" | "video" | "text" | "image";
+    type: any;
   };
   option4: {
     name: string | null;
-    type: "audio" | "video" | "text" | "image";
+    type: any;
   };
-  correctOption: string;
+  correctOption: string | null;
   sn: number;
 };
 
@@ -78,6 +78,7 @@ export const columns: ColumnDef<Category>[] = [
   {
     accessorKey: "sn",
     header: "S.N",
+    accessorFn: (row) => row.sn,
   },
   {
     accessorKey: "question",
@@ -93,31 +94,37 @@ export const columns: ColumnDef<Category>[] = [
       );
     },
     cell: ({ row }) => <div>{renderContent(row.original.question)}</div>,
+    accessorFn: (row) => row.question,
   },
   {
     accessorKey: "option1",
     header: "Option 1",
     cell: ({ row }) => <div>{renderContent(row.original.option1)}</div>,
+    accessorFn: (row) => row.option1,
   },
   {
     accessorKey: "option2",
     header: "Option 2",
     cell: ({ row }) => <div>{renderContent(row.original.option2)}</div>,
+    accessorFn: (row) => row.option2,
   },
   {
     accessorKey: "option3",
     header: "Option 3",
     cell: ({ row }) => <div>{renderContent(row.original.option3)}</div>,
+    accessorFn: (row) => row.option3,
   },
   {
     accessorKey: "option4",
     header: "Option 4",
     cell: ({ row }) => <div>{renderContent(row.original.option4)}</div>,
+    accessorFn: (row) => row.option4,
   },
   {
     id: "actions",
     cell: CustomCell,
     header: "Actions",
+    accessorFn: (row) => row.id, // Assuming `id` is the unique identifier for each row
   },
 ];
 

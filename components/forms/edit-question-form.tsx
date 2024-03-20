@@ -130,7 +130,7 @@ export const EditQuestionForm = ({
       subCategoryId: question?.subCategoryId ?? "",
       typeOfQuestionId: question?.typeOfQuestionId ?? "",
       projectId: question?.projectId ?? "",
-      correctOption: question?.correctOption,
+      correctOption: question?.correctOption ?? "",
     },
   });
 
