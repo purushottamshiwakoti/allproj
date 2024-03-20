@@ -132,7 +132,7 @@ export const AddFiles = ({ totalCount }: { totalCount: number }) => {
       } else {
         // Handle response error
         const responseData = await response.json();
-        console.error("Error uploading files:", responseData.message);
+        console.log("Error uploading files:", responseData.message);
         toast.error("Error uploading files");
       }
     } catch (error) {

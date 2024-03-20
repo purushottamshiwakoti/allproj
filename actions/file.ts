@@ -23,9 +23,10 @@ export const addFolder=async(values: z.infer<typeof folderSchema>,id:string)=>{
             return {error:"No folder found"}
         }
         const slug=generateSlug(name)
+        console.log(slug)
 
        const publicDir=path.join(process.cwd(),"public",folder.slug)
-       const folderName=path.join(publicDir,name)
+       const folderName=path.join(publicDir,slug)
       
        try {
         const folderExists=fs.existsSync(folderName)
