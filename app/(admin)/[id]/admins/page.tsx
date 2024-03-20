@@ -44,6 +44,7 @@ const AdminsPage = async ({
   const filteredData = adminsData.filter((item) =>
     item.projects?.find((i) => i.id == id)
   );
+
   const data = filteredData.map((item, index) => ({
     sn: index + 1,
     id: item.id,
@@ -58,7 +59,7 @@ const AdminsPage = async ({
         <AddButton href={`/${id}/admins/add`} />
       </div>
       <div className="mt-5">
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-2">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 lg:space-x-3  gap-2">
           <Search searchKey={"name"} searchParams={searchParams} />
           <Search searchKey={"email"} searchParams={searchParams} />
         </div>

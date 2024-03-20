@@ -1,7 +1,7 @@
 "use server"
 
-import { getAdminByEmail } from "@/lib/admin";
-import { loginSchema, userSchema } from "@/schemas";
+import { getAdminByEmail, getAdminById } from "@/lib/admin";
+import { editUserSchema, loginSchema, userSchema } from "@/schemas";
 import * as z from "zod"
 import db from "@/lib/db";
 
@@ -104,6 +104,56 @@ export const addAdmin=async(values: z.infer<typeof userSchema>,id:any)=>{
         console.log(error);
         return {error:"Something went wrong"}
     }
+
+}
+
+
+export const editUser=async(values: z.infer<typeof editUserSchema>,id:string)=>{
+   try {
+    const validateFeilds=editUserSchema.safeParse(values);
+    if(!validateFeilds.success){
+        return {error:"Invalid feilds"}
+    };
+
+    const {fullName,email,role}=validateFeilds.data;
+
+    const user=await getAdminById(id);
+    if(!user){
+        return {error:"No user found"}
+    };
+
+   if(role=="ADMIN"){
+    await db.user.update({
+        where:{
+            id
+        },
+        data:{
+            fullName,
+            email,
+            role:"ADMIN"
+        }
+    })
+   }
+
+   if(role=="SUBADMIN"){
+    await db.user.update({
+        where:{
+            id
+        },
+        data:{
+            fullName,
+            email,
+            role:"SUBADMIN"
+        }
+    })
+   }
+
+   return {success:"Successfully updated user"}
+    
+   } catch (error) {
+    return {error:"Something went wrong"}
+   }
+
 
 }
 

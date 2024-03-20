@@ -1,5 +1,6 @@
 "use client";
 
+import { nextUrl } from "@/lib/url";
 import { LoaderIcon, Plus, XCircle } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -93,10 +94,7 @@ export const FileUploader = ({
     onDrop,
   });
 
-  const nextUrl =
-    process.env.NODE_ENV === "production"
-      ? "https://www.instantbackgroundremover.com"
-      : "http://localhost:3000";
+
 
   const handleRemoveFile = () => {
     setRemovedValue(true);
@@ -132,7 +130,7 @@ export const FileUploader = ({
                   className=" rounded-md"
                 />
                 <XCircle
-                  className="text-red-500 absolute right-0 rounded-md  w-10 h-10 cursor-pointer"
+                  className="text-red-500 absolute right-1 top-1 rounded-md  w-5 h-5 cursor-pointer"
                   onClick={() => handleRemoveFile()}
                 />
               </div>
@@ -143,7 +141,7 @@ export const FileUploader = ({
                   Your browser does not support the audio element.
                 </audio>
                 <XCircle
-                  className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0"
+                  className="absolute text-red-500 cursor-pointer  w-5 h-5 right-1 top-1 bg-white rounded-md p-1  "
                   onClick={() => handleRemoveFile()}
                 />
               </div>
@@ -154,7 +152,7 @@ export const FileUploader = ({
                   Your browser does not support the video element.
                 </video>
                 <XCircle
-                  className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0"
+                  className="absolute text-red-500 cursor-pointer  w-5 h-5 right-1 top-1 bg-white rounded-md p-1  "
                   onClick={() => handleRemoveFile()}
                 />
               </div>
@@ -172,7 +170,7 @@ export const FileUploader = ({
                   className=" rounded-md"
                 />
                 <XCircle
-                  className="text-red-500 absolute right-0 rounded-md  w-10 h-10 cursor-pointer"
+                  className="text-red-500 absolute right-1 top-1 rounded-md  w-5 h-5 cursor-pointer"
                   onClick={() => handleRemoveFile()}
                 />
               </div>
@@ -182,7 +180,7 @@ export const FileUploader = ({
                   <source src={`${nextUrl}/${value}`} />
                   Your browser does not support the audio element.
                 </audio>
-                <XCircle className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0" />
+                <XCircle className="absolute text-red-500 cursor-pointer right-1 top-1  w-5 h-5 bg-white rounded-md p-1  " />
               </div>
             ) : type.includes("video") ? (
               <div className="h-[20rem] w-[17rem]  relative">
@@ -191,7 +189,7 @@ export const FileUploader = ({
                   Your browser does not support the video element.
                 </video>
                 <XCircle
-                  className="absolute text-red-500 cursor-pointer right-0 bg-white rounded-md p-1  top-0"
+                  className="absolute text-red-500 cursor-pointer right-1 top-1 w-5 h-5 bg-white rounded-md p-1  "
                   // onClick={() => handleRemoveVideo(video)}
                 />
               </div>

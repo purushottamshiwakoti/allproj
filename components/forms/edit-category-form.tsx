@@ -84,7 +84,7 @@ export const EditCategoryForm = ({ id, name, projectId }: Category) => {
 
   return (
     <div>
-      <div className="flex items-end justify-end">
+      {/* <div className="flex items-end justify-end">
         <Button
           variant={"destructive"}
           onClick={handleDelete}
@@ -92,7 +92,7 @@ export const EditCategoryForm = ({ id, name, projectId }: Category) => {
         >
           Delete
         </Button>
-      </div>
+      </div> */}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField

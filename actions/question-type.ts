@@ -48,7 +48,7 @@ export const editQuestionType=async(values: z.infer<typeof categorySchema>,id:st
         };
         const {name}=validateFeilds.data;
 
-      
+      console.log(id);
         const slug=generateSlug(name)
 
         await db.typeOfQuestion.update({
@@ -58,7 +58,6 @@ export const editQuestionType=async(values: z.infer<typeof categorySchema>,id:st
             data:{
                 name,
                 slug,
-                projectId:id
             }
         });
 

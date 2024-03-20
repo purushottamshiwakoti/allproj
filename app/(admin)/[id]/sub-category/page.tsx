@@ -48,11 +48,10 @@ const SubCategoryPage = async ({
 }) => {
   const id = params.id;
   const name = searchParams.name;
-  console.log(name);
   const data = await getData(id, name);
-  const subCategoryData = data.flatMap((item, index) =>
-    item.subcategories.map((sub) => ({
-      sn: index + 1,
+  const subCategoryData = data.flatMap((item, categoryIndex) =>
+    item.subcategories.map((sub, subIndex) => ({
+      sn: categoryIndex * item.subcategories.length + subIndex + 1,
       id: sub.id,
       name: sub.name,
       categoryName: item.name,

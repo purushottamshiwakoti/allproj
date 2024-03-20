@@ -178,7 +178,7 @@ export const EditQuestionForm = ({
 
   return (
     <div>
-      <div className="flex items-end justify-end">
+      {/* <div className="flex items-end justify-end">
         <Button
           variant={"destructive"}
           onClick={handleDelete}
@@ -186,7 +186,7 @@ export const EditQuestionForm = ({
         >
           Delete
         </Button>
-      </div>
+      </div> */}
       <div>
         {/* select type of queestion  */}
         <div className="flex gap-5 text-primary mb-2">

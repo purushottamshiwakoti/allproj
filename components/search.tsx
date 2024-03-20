@@ -56,12 +56,12 @@ const Search = ({
           <Input
             placeholder={`Filter ${searchKey}...`}
             value={inputValue}
-            className="lg:w-[25rem] w-auto capitalize"
+            className=" capitalize"
             onChange={(e) => handleChange(e.target.value)}
           />
           {inputValue && inputValue.length > 0 && (
             <X
-              className="absolute right-7 top-2 w-5 h-5 text-zinc-600 cursor-pointer"
+              className="absolute right-2 top-2 w-5 h-5 text-zinc-600 cursor-pointer"
               onClick={handleClear}
             />
           )}

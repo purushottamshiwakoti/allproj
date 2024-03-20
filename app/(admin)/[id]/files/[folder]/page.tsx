@@ -56,7 +56,7 @@ const FolderPage = async ({
       <BackButton href={`/${id}/files`} />
       <div className="flex items-center justify-between mb-3 ">
         <h2 className="capitalize text-primary font-medium text-2xl mt-5">
-          Folder Name= {folders?.name}
+          {folders?.name}
         </h2>
         <Button variant={"outline"}>
           <Link href={`/${id}/files/${folderId}/upload`}>Upload Files</Link>

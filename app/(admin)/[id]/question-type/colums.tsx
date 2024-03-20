@@ -1,7 +1,14 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Check, Copy, MoreHorizontal } from "lucide-react";
+import {
+  ArrowUpDown,
+  Check,
+  Copy,
+  Edit,
+  MoreHorizontal,
+  Trash,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,10 +19,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useState, useTransition } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
+import { deleteQuestionType } from "@/actions/question-type";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -53,8 +61,27 @@ export const columns: ColumnDef<Category>[] = [
 
 function CustomCell({ row }: { row: any }) {
   const user = row.original;
+  const router = useRouter();
   const [clicked, setClicked] = useState(false);
   const params = useParams();
+
+  const handleDelete = () => {
+    const confirmation = confirm(
+      "Are you sure you want to delete this question type! This action cannot be undone"
+    );
+
+    if (confirmation) {
+      deleteQuestionType(user.id as string).then((data) => {
+        if (data?.error) {
+          toast.error(data.error);
+        }
+        if (data?.success) {
+          toast.success(data.success);
+          router.refresh();
+        }
+      });
+    }
+  };
 
   const handleClick = (id: string) => {
     setClicked(true);
@@ -74,7 +101,7 @@ function CustomCell({ row }: { row: any }) {
       ) : (
         <Copy className="h-4 w-4 p-0" onClick={() => handleClick(user.id)} />
       )}
-      <DropdownMenu>
+      {/* <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
             <span className="sr-only">Open menu</span>
@@ -93,7 +120,12 @@ function CustomCell({ row }: { row: any }) {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
         </DropdownMenuContent>
-      </DropdownMenu>
+      </DropdownMenu> */}
+
+      <Link href={`/${params.id}/question-type/${user.id}`}>
+        <Edit className="w-4 h-4 text-emerald-700" />
+      </Link>
+      <Trash className="w-4 h-4 text-red-600" onClick={handleDelete} />
     </div>
   );
 }

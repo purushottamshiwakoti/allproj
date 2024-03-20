@@ -87,7 +87,7 @@ model Question {
   questionAudio String?
   questionVideo String?
   option        String?
-  correctOption String
+  correctOption String?
   optionImage   String?
   optionAudio   String?
   optionVideo   String?

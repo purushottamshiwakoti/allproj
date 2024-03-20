@@ -62,6 +62,17 @@ export const userSchema = z.object({
     role:z.string().min(1,{message:"Please select role"}),
    
 });
+export const editUserSchema = z.object({
+    fullName: z.string().min(2,{
+        message: "Full Name must be at least 2 characters"
+    }).max(50,{
+        message: "Full Name  cannot be more than 50 characters"
+    }),
+
+    email:z.string().email(),
+    role:z.string().min(1,{message:"Please select role"}),
+   
+});
 
 
 export const questionSchema = z.object({

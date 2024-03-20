@@ -1,8 +1,14 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Check, Copy, MoreHorizontal } from "lucide-react";
-
+import {
+  ArrowUpDown,
+  Check,
+  Copy,
+  Edit,
+  MoreHorizontal,
+  Trash,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,18 +21,15 @@ import {
 import { useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { deleteCategory } from "@/actions/category";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 export type Category = {
   id: string;
   name: string;
   subcategories: string[];
   sn: number;
 };
-
-// Import statements...
 
 export const columns: ColumnDef<Category>[] = [
   {
@@ -53,54 +56,57 @@ export const columns: ColumnDef<Category>[] = [
   },
   {
     id: "actions",
-    cell: CustomCell, // Use a separate component for the cell
+    header: "Actions",
+    cell: CustomCell,
   },
 ];
 
 function CustomCell({ row }: { row: any }) {
-  const user = row.original;
+  const { id, name } = row.original;
   const [clicked, setClicked] = useState(false);
+  const router = useRouter();
+
   const params = useParams();
 
-  const handleClick = (id: string) => {
+  const handleClick = () => {
     setClicked(true);
     toast.success("Successfully copied category id");
     navigator.clipboard.writeText(id);
-
-    // Reset the clicked state after a short delay to allow the animation to play
     setTimeout(() => {
       setClicked(false);
-    }, 600); // Adjust the duration of the animation (in milliseconds) as needed
+    }, 600);
+  };
+
+  const handleDelete = () => {
+    const confirmation = confirm(
+      "Are you sure you want to delete this category? This action cannot be undone."
+    );
+
+    if (confirmation) {
+      deleteCategory(id as string).then((data) => {
+        if (data?.error) {
+          toast.error(data.error);
+        }
+        if (data?.success) {
+          toast.success(data.success);
+          router.refresh();
+        }
+      });
+    }
   };
 
   return (
     <>
-      <div className="flex items-center space-x-2 cursor-pointer ">
+      <div className="flex items-center space-x-2 cursor-pointer">
         {clicked ? (
           <Check className="h-4 w-4 p-0 text-emerald-500" />
         ) : (
-          <Copy className="h-4 w-4 p-0" onClick={() => handleClick(user.id)} />
+          <Copy className="h-4 w-4 p-0" onClick={handleClick} />
         )}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem asChild>
-              <Link
-                href={`/${params.id}/category/${user.id}`}
-                className="cursor-pointer"
-              >
-                Edit Category
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Link href={`/${params.id}/category/${id}`}>
+          <Edit className="w-4 h-4 text-emerald-700" />
+        </Link>
+        <Trash className="w-4 h-4 text-red-600" onClick={handleDelete} />
       </div>
     </>
   );
